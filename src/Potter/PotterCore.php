@@ -69,7 +69,7 @@ class PotterCore
      * @param $file
      * @return void
      */
-    private function  loadFile($file)
+    public function  loadFile($file)
     {
         $file = cleanURI($file);
         if (!file_exists($file)) return;
@@ -82,10 +82,25 @@ class PotterCore
         if (class_exists($name)):
             $class = new $name;
             //Model Class
-            if (is_subclass_of($name, 'Potter\Model')):
-                $type = $class->getPostType();
-                $this->models->put($type, $class);
+            if (is_subclass_of($name, 'Potter\Post\Type')):
+                $this->registerModel($class);
+
             endif;
         endif;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getModels()
+    {
+        return $this->models;
+    }
+
+    private function registerModel(Post\Type $postType)
+    {
+        $type = $postType->getPostType();
+
+        $this->models->put($type, $postType);
     }
 }

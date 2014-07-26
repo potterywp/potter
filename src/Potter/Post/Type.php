@@ -1,10 +1,11 @@
 <?php
 
-namespace Potter;
+namespace Potter\Post;
 
+use Illuminate\Support\Str;
 use Super_Custom_Post_Type;
 
-abstract class Model extends Super_Custom_Post_Type
+abstract class Type extends Super_Custom_Post_Type
 {
 
     /**
@@ -43,7 +44,6 @@ abstract class Model extends Super_Custom_Post_Type
      * @var boolean
      */
     protected $show_ui;
-
     /**
      * @var string
      */
@@ -52,6 +52,10 @@ abstract class Model extends Super_Custom_Post_Type
      * @var string
      */
     protected $route;
+    /**
+     * @var array
+     */
+    protected $queryArgs = array();
 
     public function __construct()
     {
@@ -68,7 +72,10 @@ abstract class Model extends Super_Custom_Post_Type
     public function getPostType()
     {
         if (empty($this->type)):
-            $this->type = strtolower(str_replace('Model', '', get_class($this)));
+            $class      = get_class($this);
+            $this->type = str_replace('Model', '', $class);
+            $this->type = str_replace('Type', '', $this->type);
+            $this->type = Str::snake($this->type);
         endif;
 
         return $this->type;
@@ -117,5 +124,13 @@ abstract class Model extends Super_Custom_Post_Type
                 'not_found_in_trash' => __('Not found in Trash'),
             )
         );
+    }
+
+    /**
+     * @return array
+     */
+    public function getQueryArgs()
+    {
+        return $this->queryArgs;
     }
 }
