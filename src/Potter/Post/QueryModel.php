@@ -2,35 +2,18 @@
 
 namespace Potter\Post;
 
-class QueryModel
+class QueryModel extends Query
 {
     private $postType;
-    private $_instanse;
-    /**
-     * @var Query;
-     */
-    private $query;
+    private $_typeObject;
 
-    public function __construct(Type &$_instanse)
+    public function __construct(Type &$_typeObject)
     {
-        $this->_instanse = $_instanse;
-        $this->postType  = $_instanse->getPostType();
+        $this->_typeObject = $_typeObject;
+        $this->postType    = $_typeObject->getPostType();
 
-        $args = $_instanse->getQueryArgs();
+        $args = $_typeObject->getQueryArgs();
 
-        $this->newQuery($args);
-    }
-
-    public function newQuery($args = array())
-    {
-        $this->query = new Query($args, $this->postType);
-    }
-
-    /**
-     * @return \WP_Query
-     */
-    public function exe()
-    {
-        return $this->query->exe();
+        parent::__construct($args, $this->postType);
     }
 }

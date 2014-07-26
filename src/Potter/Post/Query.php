@@ -3,6 +3,7 @@
 namespace Potter\Post;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use WP_Query;
 
 /**
@@ -16,8 +17,18 @@ class Query
     public function __construct(array $args = array(), $postType = null, $perPage = null)
     {
         $this->args = new Collection($args);
-        if (!empty($postType)) $this->PostType($postType);
+        if (!empty($postType)) $this->postType($postType);
+        if (!empty($perPage)) $this->perPage($perPage);
 
+    }
+
+    /**
+     * @param $type
+     * @return Query
+     */
+    public function postType($type)
+    {
+        return $this->put('post_type', $type);
     }
 
     /**
@@ -33,17 +44,131 @@ class Query
     }
 
     /**
-     * @param $type
+     * @param $perPage
      * @return Query
      */
-    public function postType($type)
-    {
-        return $this->put('post_type', $type);
-    }
-
     public function perPage($perPage)
     {
-        $this->put('posts_per_page', $perPage);
+        return $this->put('posts_per_page', $perPage);
+    }
+
+    /**
+     * @param $value
+     * @return Query
+     */
+    public function order($value)
+    {
+        return $this->put('order', $value);
+    }
+
+    /**
+     * @param $value
+     * @return Query
+     */
+    public function orderBy($value)
+    {
+        return $this->put('orderby', $value);
+    }
+
+    /**
+     * @param int $limit
+     * @param array $args
+     * @return WP_Query
+     */
+    public function get($limit, $args = array())
+    {
+        if (is_numeric($limit)):
+            return $this->perPage($limit)->exe($args);
+        else:
+            return $this->exe($args);
+        endif;
+    }
+
+    /**
+     * @param $id
+     */
+    public function byParent($id)
+    {
+        $this->put('post_parent', $id)->exe();
+    }
+
+    /**
+     * @param $ids
+     */
+    public function byParents($ids)
+    {
+        $ids = (array)$ids;
+        $this->put('post_parent__in', $ids)->exe();
+    }
+
+    public function exclude($ids)
+    {
+        $ids = (array)$ids;
+        return $this->put('post__not_in', $ids);
+    }
+
+    /**
+     * @param $id
+     * @return WP_Query
+     */
+    function byID($id)
+    {
+        return $this->put('p', $id)->exe();
+    }
+
+    /**
+     * @param $ids
+     * @return WP_Query
+     */
+    function byIDs($ids)
+    {
+        return $this->put('post__in', $ids)->exe();
+    }
+
+    /**
+     * @param array|int $id
+     * @return WP_Query
+     */
+    public function notID($id)
+    {
+        return $this->notIDs($id);
+    }
+
+    /**
+     * @param array $ids
+     * @return WP_Query
+     */
+    public function notIDs($ids)
+    {
+        return $this->exclude($ids)->exe();
+    }
+
+    /**
+     * @return WP_Query
+     */
+    public function all()
+    {
+        return $this->perPage(-1)->exe();
+    }
+
+    /**
+     * @return WP_Query
+     */
+    public function exe($args = array())
+    {
+        $_query = new WP_Query($this->args->all());
+        $_query = wp_parse_args($_query, $args);
+
+        return $_query;
+    }
+
+    /**
+     * @param $key
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        return $this->args->get($key);
     }
 
     /**
@@ -57,21 +182,26 @@ class Query
     }
 
     /**
-     * @param $key
-     * @return mixed
+     * @param $name
+     * @param $args
+     * @return Query
      */
-    public function __get($key)
+    public function __call($name, $args)
     {
-        return $this->args->get($key);
-    }
+        $name = Str::snake($name);
 
-    /**
-     * @return WP_Query
-     */
-    public function exe()
-    {
-        $_query = new WP_Query($this->args->all());
+        switch (count($args)):
+            case 0:
+                $this->__set($name, true);
+                break;
+            case 1:
+                $this->__set($name, $args[0]);
+                break;
+            default:
+                $this->__set($name, $args);
+                break;
+        endswitch;
 
-        return $_query;
+        return $this;
     }
 }
