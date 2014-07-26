@@ -1,0 +1,29 @@
+{
+    "name": "potterywp/potter",
+    "description": "Set of tools that help you make WordPress sites more easily.",
+    "license": "MIT",
+    "authors": [{
+        "name": "Vinicius Reis",
+        "email": "contato@luizvinicius.com.br"
+    }],
+    "repositories": [{
+        "type": "vcs",
+        "url": "https://github.com/potterywp/super-cpt"
+    }],
+    "require": {
+        "alterfw/meta-box": "dev-master",
+        "alterfw/wordpress-for-developers": "dev-master",
+        "illuminate/support": "dev-master",
+        "valendesigns/option-tree": "dev-master",
+        "potterywp/super-cpt": "dev-master"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": {
+            "Potter": "src/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist"
+    }
+}
