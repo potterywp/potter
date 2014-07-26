@@ -19,6 +19,7 @@
     },
     "minimum-stability": "dev",
     "autoload": {
+        "files": ["src/Potter/Loader.php"],
         "psr-0": {
             "Potter": "src/"
         }
