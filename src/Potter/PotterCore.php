@@ -3,6 +3,7 @@
 namespace Potter;
 
 use Illuminate\Support\Collection;
+use Potter\Theme\OptionsEmpty;
 use Super_CPT_Loader;
 
 class PotterCore
@@ -14,7 +15,7 @@ class PotterCore
     /**
      * @var array
      */
-    protected $autolaodFiles = array('app/ThemeOptions.php');
+    protected $autolaodFiles = array();
     /**
      * @var string
      */
@@ -22,17 +23,22 @@ class PotterCore
     /**
      * @var string
      */
-    protected $themeURI;
+    protected $themeURL;
     /**
      * @var \Illuminate\Support\Collection
      */
     protected $models;
 
+    /**
+     * @var \Potter\Theme\Options
+     */
+    protected $optionsInstance;
+
     public function __construct()
     {
-        $this->themeDIR  = trailingslashit(get_template_directory());
-        $this->themeURI  = trailingslashit(get_template_directory_uri());
-        $SCPT_PLUGIN_URL = $this->themeURI . 'vendor/potterywp/super-cpt/';
+        $this->themeDIR  = THEME_DIR;
+        $this->themeURL  = THEME_URL;
+        $SCPT_PLUGIN_URL = $this->themeURL . 'vendor/potterywp/super-cpt/';
         $SCPT_PLUGIN_DIR = $this->themeDIR . 'vendor/potterywp/super-cpt';
 
         Super_CPT_Loader::load($SCPT_PLUGIN_URL, $SCPT_PLUGIN_DIR);
@@ -62,17 +68,19 @@ class PotterCore
                 $this->loadFile($file);
             endforeach;
         endforeach;
+
+        $this->loadThemeOptions();
     }
 
 
     /**
      * @param $file
-     * @return void
+     * @return mixed
      */
     public function  loadFile($file)
     {
         $file = cleanURI($file);
-        if (!file_exists($file)) return;
+        if (!file_exists($file)) return false;;
         // Include
         require_once($file);
 
@@ -84,9 +92,32 @@ class PotterCore
             //Model Class
             if (is_subclass_of($name, 'Potter\Post\Type')):
                 $this->registerModel($class);
-
             endif;
+
+            return $class;
         endif;
+
+        return true;
+    }
+
+    private function loadThemeOptions()
+    {
+        $file = cleanURI($this->themeDIR . 'app/ThemeOptions.php');
+        $file = apply_filters('potter_autoload_files', $file);
+
+        $class = $this->loadFile($file);
+
+        if (!$class):
+            $class = new OptionsEmpty();
+            add_action('admin_menu', array($this, 'remove_ot_theme_options_page'), 999);
+        endif;
+
+        $this->optionsInstance = $class;
+    }
+
+    public function remove_ot_theme_options_page()
+    {
+        remove_submenu_page('themes.php', 'ot-theme-options');
     }
 
     /**
@@ -95,6 +126,11 @@ class PotterCore
     public function getModels()
     {
         return $this->models;
+    }
+
+    public function getOptionsInstance()
+    {
+        return $this->optionsInstance;
     }
 
     private function registerModel(Post\Type $postType)

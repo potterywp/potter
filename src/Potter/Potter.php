@@ -2,6 +2,7 @@
 namespace Potter;
 
 use Potter\Post\QueryModel;
+use Potter\Theme\Features;
 
 class Potter
 {
@@ -9,13 +10,15 @@ class Potter
      * @var PotterCore
      */
     private static $potter;
+    private static $features;
 
     /**
      * @param PotterCore $potterCore
      */
-    public function __construct(PotterCore $potterCore)
+    public function __construct(PotterCore $potterCore, Features $features)
     {
-        self::$potter = $potterCore;
+        self::$potter   = $potterCore;
+        self::$features = $features;
     }
 
     /**
@@ -37,5 +40,13 @@ class Potter
         $query = new QueryModel($_PostType);
 
         return $query;
+    }
+
+    /**
+     * @return Features
+     */
+    public static function feature()
+    {
+        return self::$features;
     }
 }
