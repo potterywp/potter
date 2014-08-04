@@ -9,9 +9,12 @@
     "repositories": [{
         "type": "vcs",
         "url": "https://github.com/potterywp/super-cpt"
+    }, {
+        "type": "vcs",
+        "url": "https://github.com/potterywp/meta-box"
     }],
     "require": {
-        "rilwis/meta-box": "dev-master",
+        "potterywp/meta-box": "dev-master",
         "illuminate/support": "dev-master",
         "valendesigns/option-tree": "dev-master",
         "potterywp/super-cpt": "dev-master"
