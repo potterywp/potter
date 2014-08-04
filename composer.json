@@ -14,7 +14,7 @@
         "url": "https://github.com/potterywp/meta-box"
     }],
     "require": {
-        "potterywp/meta-box": "dev-master",
+        "rilwis/meta-box": "dev-master",
         "illuminate/support": "dev-master",
         "valendesigns/option-tree": "dev-master",
         "potterywp/super-cpt": "dev-master"
