@@ -3,6 +3,7 @@ namespace Potter;
 
 use Potter\Post\QueryModel;
 use Potter\Theme\Features;
+use Potter\Utils\Metabox;
 
 class Potter
 {
@@ -11,7 +12,6 @@ class Potter
      */
     private static $potter;
     private static $features;
-
     /**
      * @param PotterCore $potterCore
      */
@@ -31,6 +31,7 @@ class Potter
 
     /**
      * @param $name
+     *
      * @return QueryModel
      */
     public static function model($name)
@@ -48,5 +49,17 @@ class Potter
     public static function features()
     {
         return self::$features;
+    }
+
+    /**
+     * @param $attributes
+     * @param $fields
+     * @param $autoRegister
+     *
+     * @return Metabox
+     */
+    public static function makeMetabox(array $attributes, array $fields = array(), $autoRegister = true)
+    {
+        return new Metabox($attributes, $fields, $autoRegister);
     }
 }
