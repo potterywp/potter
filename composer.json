@@ -11,8 +11,7 @@
         "url": "https://github.com/potterywp/super-cpt"
     }],
     "require": {
-        "alterfw/meta-box": "dev-master",
-        "alterfw/wordpress-for-developers": "dev-master",
+        "rilwis/meta-box": "dev-master",
         "illuminate/support": "dev-master",
         "valendesigns/option-tree": "dev-master",
         "potterywp/super-cpt": "dev-master"
