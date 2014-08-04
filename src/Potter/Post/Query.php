@@ -156,8 +156,8 @@ class Query
      */
     public function exe($args = array())
     {
-        $_query = new WP_Query($this->args->all());
-        $_query = wp_parse_args($_query, $args);
+        $_query = wp_parse_args($this->args->all(), $args);
+        $_query = new WP_Query($_query);
 
         return $_query;
     }

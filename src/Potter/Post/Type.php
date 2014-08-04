@@ -95,8 +95,9 @@ abstract class Type extends Super_Custom_Post_Type
         endif;
         $customizations['labels'] = $this->getLabels();
 
-
         $customizations = wp_parse_args($this->args, $customizations);
+
+        if(!empty($this->icon)) $this->set_icon($this->icon);
 
         parent::register_post_type($customizations);
     }
