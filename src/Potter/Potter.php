@@ -45,7 +45,7 @@ class Potter
     /**
      * @return Features
      */
-    public static function feature()
+    public static function features()
     {
         return self::$features;
     }
