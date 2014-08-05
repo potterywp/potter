@@ -103,7 +103,7 @@ class PotterCore
     private function loadThemeOptions()
     {
         $file = cleanURI($this->themeDIR . 'app/ThemeOptions.php');
-        $file = apply_filters('potter_autoload_files', $file);
+        $file = apply_filters('potter_autoload_themeoptions', $file);
 
         $class = $this->loadFile($file);
 
