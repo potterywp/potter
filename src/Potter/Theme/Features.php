@@ -11,12 +11,12 @@ class Features
     protected $js = array();
     protected $js_enqueue = array();
     protected $jQueryCDN
-        = array(
-            'cdn_url'  => null,
-            'fallback' => null,
-            'migrate'  => null,
-            'in_footer'  => false,
-        );
+       = array(
+          'cdn_url'   => null,
+          'fallback'  => null,
+          'migrate'   => null,
+          'in_footer' => false,
+       );
 
     public static $jQueryCDN_URL = '//ajax.googleapis.com/ajax/libs/jquery/%1s/jquery.min.js';
     public static $GOOGLE_ANALYTICS_ID = false;
@@ -48,19 +48,19 @@ class Features
 
     /**
      * @param string $name
-     * @param int $width
-     * @param int $height
-     * @param bool $crop
+     * @param int    $width
+     * @param int    $height
+     * @param bool   $crop
      *
      * @return $this
      */
     public function addImageSize($name, $width = 0, $height = 0, $crop = false)
     {
         $size = array(
-            'name'   => $name,
-            'width'  => $width,
-            'height' => $height,
-            'crop'   => $crop
+           'name'   => $name,
+           'width'  => $width,
+           'height' => $height,
+           'crop'   => $crop
         );
 
         $this->imagesSize[] = $size;
@@ -96,8 +96,8 @@ class Features
     /**
      * @param string $handle
      * @param string $src
-     * @param array $deps
-     * @param bool $ver
+     * @param array  $deps
+     * @param bool   $ver
      * @param string $media
      *
      * @return $this
@@ -105,11 +105,11 @@ class Features
     public function addCss($handle, $src = false, $deps = array(), $ver = null, $media = 'all')
     {
         $this->css[] = array(
-            'handle' => $handle,
-            'src'    => $this->prepUrl($src),
-            'deps'   => $deps,
-            'ver'    => $ver,
-            'media'  => $media
+           'handle' => $handle,
+           'src'    => $this->prepUrl($src),
+           'deps'   => $deps,
+           'ver'    => $ver,
+           'media'  => $media
         );
 
         return $this;
@@ -118,20 +118,20 @@ class Features
     /**
      * @param string $handle
      * @param string $src
-     * @param array $deps
-     * @param bool $ver
-     * @param bool $in_footer
+     * @param array  $deps
+     * @param bool   $ver
+     * @param bool   $in_footer
      *
      * @return $this
      */
     public function addJs($handle, $src, $deps = array(), $ver = null, $in_footer = false)
     {
         $this->js[] = array(
-            'handle'    => $handle,
-            'src'       => $this->prepUrl($src),
-            'deps'      => $deps,
-            'ver'       => $ver,
-            'in_footer' => $in_footer
+           'handle'    => $handle,
+           'src'       => $this->prepUrl($src),
+           'deps'      => $deps,
+           'ver'       => $ver,
+           'in_footer' => $in_footer
         );
 
         $this->addJsEnqueue($handle);
@@ -142,8 +142,8 @@ class Features
     /**
      * @param string $handle
      * @param string $src
-     * @param array $deps
-     * @param bool $ver
+     * @param array  $deps
+     * @param bool   $ver
      *
      * @return $this
      */
@@ -155,8 +155,8 @@ class Features
     /**
      * @param string $handle
      * @param string $src
-     * @param array $deps
-     * @param bool $ver
+     * @param array  $deps
+     * @param bool   $ver
      *
      * @return $this
      */
@@ -167,21 +167,21 @@ class Features
 
     /**
      * @param string $handle
-     * @param bool $src
-     * @param array $deps
-     * @param bool $ver
-     * @param bool $in_footer
+     * @param bool   $src
+     * @param array  $deps
+     * @param bool   $ver
+     * @param bool   $in_footer
      *
      * @return $this
      */
     public function addJsEnqueue($handle, $src = false, $deps = array(), $ver = false, $in_footer = false)
     {
         $this->js_enqueue[] = array(
-            'handle'    => $handle,
-            'src'       => $src,
-            'deps'      => $deps,
-            'ver'       => $ver,
-            'in_footer' => $in_footer
+           'handle'    => $handle,
+           'src'       => $src,
+           'deps'      => $deps,
+           'ver'       => $ver,
+           'in_footer' => $in_footer
         );
 
         return $this;
@@ -189,8 +189,8 @@ class Features
 
     /**
      * @param string $version
-     * @param string   $fallback
-     * @param string   $migrate
+     * @param string $fallback
+     * @param string $migrate
      * @param bool   $in_footer
      *
      * @return $this
@@ -247,10 +247,10 @@ EOT;
         $this->js_enqueue = array();
 
         $default = array(
-            'src'       => false,
-            'deps'      => array(),
-            'ver'       => false,
-            'in_footer' => false
+           'src'       => false,
+           'deps'      => array(),
+           'ver'       => false,
+           'in_footer' => false
         );
 
         if ($this->ArrayIsMulti($data)):
@@ -305,9 +305,9 @@ EOT;
 
             // Migrate
             if (!empty($this->jQueryCDN['migrate'])):
-              echo $this->jQueryCDN['migrate'];
-              wp_register_script('jquery-migrate', $this->jQueryCDN['migrate'], false, null, $jquery_in_footer);
-              wp_enqueue_script('jquery-migrate');
+                echo $this->jQueryCDN['migrate'];
+                wp_register_script('jquery-migrate', $this->jQueryCDN['migrate'], false, null, $jquery_in_footer);
+                wp_enqueue_script('jquery-migrate');
             endif;
         endif;
 
@@ -322,11 +322,11 @@ EOT;
         //JS Enqueue
         foreach ($this->js_enqueue as $enqueue):
             wp_enqueue_script(
-                $enqueue['handle'],
-                $enqueue['src'],
-                $enqueue['deps'],
-                $enqueue['ver'],
-                $enqueue['in_footer']
+               $enqueue['handle'],
+               $enqueue['src'],
+               $enqueue['deps'],
+               $enqueue['ver'],
+               $enqueue['in_footer']
             );
         endforeach;
     }
@@ -335,7 +335,7 @@ EOT;
     {
         if (self::$add_jquery_fallback):
             echo '<script>window.jQuery||document.write(\'<script src="' . $this->jQueryCDN['fallback'] .
-                 '"><\/script>\')</script>' . "\n";
+               '"><\/script>\')</script>' . "\n";
             self::$add_jquery_fallback = false;
         endif;
 
