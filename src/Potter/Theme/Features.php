@@ -9,7 +9,7 @@ class Features
     protected $postSupport = array();
     protected $css = array();
     protected $js = array();
-    protected $js_enqueue = array();
+    protected $jsEnqueue = array();
     protected $jQueryCDN
        = array(
           'cdn_url'   => null,
@@ -183,7 +183,7 @@ class Features
      */
     public function addJsEnqueue($handle, $src = false, $deps = array(), $ver = false, $in_footer = false)
     {
-        $this->js_enqueue[] = array(
+        $this->jsEnqueue[] = array(
            'handle'    => $handle,
            'src'       => $src,
            'deps'      => $deps,
@@ -311,7 +311,7 @@ EOT;
             wp_register_script($js['handle'], $js['src'], $js['deps'], $js['ver'], $js['in_footer']);
         endforeach;
         //JS Enqueue
-        foreach ($this->js_enqueue as $enqueue):
+        foreach ($this->jsEnqueue as $enqueue):
             wp_enqueue_script(
                $enqueue['handle'],
                $enqueue['src'],
@@ -360,7 +360,7 @@ EOT;
      */
     public function setJsEnqueue(array $data)
     {
-        $this->js_enqueue = array();
+        $this->jsEnqueue = array();
 
         $default = array(
            'src'       => false,
@@ -371,11 +371,11 @@ EOT;
 
         if ($this->ArrayIsMulti($data)):
             foreach ($data as $enqueue):
-                $this->js_enqueue[] = wp_parse_args($enqueue, $default);
+                $this->jsEnqueue[] = wp_parse_args($enqueue, $default);
             endforeach;
         else:
             foreach ($data as $handle):
-                $this->js_enqueue[] = wp_parse_args(array('handle' => $handle), $default);
+                $this->jsEnqueue[] = wp_parse_args(array('handle' => $handle), $default);
             endforeach;
         endif;
 
