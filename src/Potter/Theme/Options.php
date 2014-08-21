@@ -12,6 +12,7 @@ abstract class Options
     protected $show_new_layout = false;
     protected $show_docs = false;
     protected $show_pages = false;
+    protected $options_capability = 'edit_theme_options';
 
     protected $contextual_help
         = array(
@@ -33,6 +34,7 @@ abstract class Options
         add_filter('ot_theme_options_menu_title', array($this, 'getMenuTitle'));
         add_filter('ot_header_logo_link', array($this, 'getHeaderLogoLink'));
         add_filter('ot_header_version_text', array($this, 'getHeaderVersionText'));
+        add_filter('ot_theme_options_capability', array($this, 'getOptionsCapability'));
 
         add_action('admin_init', array($this, 'admin_init'));
 
@@ -101,6 +103,14 @@ abstract class Options
     public function getShowDocs()
     {
         return $this->show_docs;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOptionsCapability()
+    {
+        return $this->options_capability;
     }
 
     /**
