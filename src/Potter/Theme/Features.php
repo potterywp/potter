@@ -371,6 +371,6 @@ EOT;
             $path = THEME_URL . '/' . trim($info['path'], '/');
         endif;
 
-        return preg_replace('/(\/+)/', '/', $path);
+        return cleanURI($path);
     }
 }

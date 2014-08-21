@@ -17,12 +17,12 @@ $RWMB_DIR = THEME_DIR . 'vendor/rilwis/meta-box/';
 RWMB_Loader::loader($RWMB_URL, $RWMB_DIR);
 
 // Init potter
-global $potter, $features, $OPT;
+global $potter, $features;
 
 $core = new PotterCore();
 $core->autoload();
 
 $features = new Features();
-$OPT      = new \OPT($core->getOptionsInstance());
+\OPT::setInstanse($core->getOptionsInstance());
 
 $potter = new Potter($core, $features);

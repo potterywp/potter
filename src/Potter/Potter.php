@@ -1,6 +1,7 @@
 <?php
 namespace Potter;
 
+use OPT;
 use Potter\Post\QueryModel;
 use Potter\Theme\Features;
 use Potter\Utils\Metabox;
@@ -12,8 +13,10 @@ class Potter
      */
     private static $potter;
     private static $features;
+
     /**
      * @param PotterCore $potterCore
+     * @param Features   $features
      */
     public function __construct(PotterCore $potterCore, Features $features)
     {
@@ -30,7 +33,7 @@ class Potter
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return QueryModel
      */
@@ -52,14 +55,25 @@ class Potter
     }
 
     /**
-     * @param $attributes
-     * @param $fields
-     * @param $autoRegister
+     * @param array $attributes
+     * @param array $fields
+     * @param bool  $autoRegister
      *
      * @return Metabox
      */
     public static function makeMetabox(array $attributes, array $fields = array(), $autoRegister = true)
     {
         return new Metabox($attributes, $fields, $autoRegister);
+    }
+
+    /**
+     * @param string $name
+     * @param null   $default
+     *
+     * @return null|string
+     */
+    public static function OPT($name, $default = null)
+    {
+        return OPT::get($name, $default);
     }
 }
