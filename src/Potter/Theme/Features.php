@@ -305,7 +305,6 @@ EOT;
 
             // Migrate
             if (!empty($this->jQueryCDN['migrate'])):
-                echo $this->jQueryCDN['migrate'];
                 wp_register_script('jquery-migrate', $this->jQueryCDN['migrate'], false, null, $jquery_in_footer);
                 wp_enqueue_script('jquery-migrate');
             endif;
@@ -369,9 +368,9 @@ EOT;
         $info = parse_url($path);
 
         if (!isset($info['host'])):
-            return THEME_URL . '/' . trim($info['path'], '/');
+            $path = THEME_URL . '/' . trim($info['path'], '/');
         endif;
 
-        return trim($path, '/');
+        return preg_replace('/(\/+)/', '/', $path);
     }
 }
