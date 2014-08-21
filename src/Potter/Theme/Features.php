@@ -13,7 +13,9 @@ class Features
     protected $jQueryCDN
         = array(
             'cdn_url'  => null,
-            'fallback' => null
+            'fallback' => null,
+            'migrate'  => null,
+            'in_footer'  => false,
         );
 
     public static $jQueryCDN_URL = '//ajax.googleapis.com/ajax/libs/jquery/%1s/jquery.min.js';
@@ -187,16 +189,20 @@ class Features
 
     /**
      * @param string $version
-     * @param bool $fallback
+     * @param string   $fallback
+     * @param string   $migrate
+     * @param bool   $in_footer
      *
      * @return $this
      */
-    public function setJqueryCDNSupport($version, $fallback = false)
+    public function setJqueryCDNSupport($version, $fallback = null, $migrate = null, $in_footer = false)
     {
         $cdnUrl = sprintf(self::$jQueryCDN_URL, $version);
 
-        $this->jQueryCDN['cdn_url']  = $cdnUrl;
-        $this->jQueryCDN['fallback'] = ($fallback) ? $this->prepUrl($fallback) : null;
+        $this->jQueryCDN['cdn_url']   = $cdnUrl;
+        $this->jQueryCDN['fallback']  = ($fallback) ? $this->prepUrl($fallback) : null;
+        $this->jQueryCDN['migrate']   = ($migrate) ? $this->prepUrl($migrate) : null;
+        $this->jQueryCDN['in_footer'] = $in_footer;
 
         return $this;
     }
@@ -285,12 +291,23 @@ EOT;
 
     public function _wp_enqueue_scripts()
     {
+        // jQueryCDN
         if (!empty($this->jQueryCDN['cdn_url'])):
+            $jquery_in_footer = $this->jQueryCDN['in_footer'];
             wp_deregister_script('jquery');
-            wp_register_script('jquery', $this->jQueryCDN['cdn_url'], false, null, false);
+            wp_register_script('jquery', $this->jQueryCDN['cdn_url'], false, null, $jquery_in_footer);
             wp_enqueue_script('jquery');
+
+            // Fallback
             if (!empty($this->jQueryCDN['fallback'])):
                 add_filter('script_loader_src', array($this, '_jquery_local_fallback'), 10, 2);
+            endif;
+
+            // Migrate
+            if (!empty($this->jQueryCDN['migrate'])):
+              echo $this->jQueryCDN['migrate'];
+              wp_register_script('jquery-migrate', $this->jQueryCDN['migrate'], false, null, $jquery_in_footer);
+              wp_enqueue_script('jquery-migrate');
             endif;
         endif;
 
