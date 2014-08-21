@@ -17,6 +17,11 @@ class Features
           'migrate'   => null,
           'in_footer' => false,
        );
+    protected $customLoginLogo
+       = array(
+          'logo_url' => null,
+          'style'    => array()
+       );
 
     public static $jQueryCDN_URL = '//ajax.googleapis.com/ajax/libs/jquery/%1s/jquery.min.js';
     public static $GOOGLE_ANALYTICS_ID = false;
@@ -29,6 +34,8 @@ class Features
         add_action('wp_enqueue_scripts', array($this, '_wp_enqueue_scripts'), 100);
 
         add_action('wp_footer', array($this, '_google_analytics'), 20);
+
+        add_action('login_enqueue_scripts', array($this, '_login_enqueue_scripts'));
 
     }
 
@@ -219,6 +226,20 @@ class Features
         return $this;
     }
 
+    /**
+     * @param string $logo
+     * @param array  $style
+     *
+     * @return $this
+     */
+    public function setLoginLogo($logo, $style = array())
+    {
+        $this->customLoginLogo['logo_url'] = $this->prepUrl($logo);
+        $this->customLoginLogo['style']    = $style;
+
+        return $this;
+    }
+
     public function _google_analytics()
     {
         $GOOGLE_ANALYTICS_ID = self::$GOOGLE_ANALYTICS_ID;
@@ -235,35 +256,6 @@ class Features
 </script>
 EOT;
         }
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return $this
-     */
-    public function setJsEnqueue(array $data)
-    {
-        $this->js_enqueue = array();
-
-        $default = array(
-           'src'       => false,
-           'deps'      => array(),
-           'ver'       => false,
-           'in_footer' => false
-        );
-
-        if ($this->ArrayIsMulti($data)):
-            foreach ($data as $enqueue):
-                $this->js_enqueue[] = wp_parse_args($enqueue, $default);
-            endforeach;
-        else:
-            foreach ($data as $handle):
-                $this->js_enqueue[] = wp_parse_args(array('handle' => $handle), $default);
-            endforeach;
-        endif;
-
-        return $this;
     }
 
     public function _after_setup_theme()
@@ -330,6 +322,22 @@ EOT;
         endforeach;
     }
 
+    public function _login_enqueue_scripts()
+    {
+        if (!empty($this->customLoginLogo['logo_url'])):
+            $logo  = $this->customLoginLogo['logo_url'];
+            $style = $this->customLoginLogo['style'];
+
+            $output = array('<style> body.login div#login h1 a{ background-image: url(' . $logo . '); ');
+            foreach ($style as $key => $value):
+                $output[] = "{$key}: {$value}; ";
+            endforeach;
+            $output[] = '} </style>';
+
+            echo implode('', $output);
+        endif;
+    }
+
     public function _jquery_local_fallback($src, $handle = null)
     {
         if (self::$add_jquery_fallback):
@@ -343,6 +351,35 @@ EOT;
         endif;
 
         return $src;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return $this
+     */
+    public function setJsEnqueue(array $data)
+    {
+        $this->js_enqueue = array();
+
+        $default = array(
+           'src'       => false,
+           'deps'      => array(),
+           'ver'       => false,
+           'in_footer' => false
+        );
+
+        if ($this->ArrayIsMulti($data)):
+            foreach ($data as $enqueue):
+                $this->js_enqueue[] = wp_parse_args($enqueue, $default);
+            endforeach;
+        else:
+            foreach ($data as $handle):
+                $this->js_enqueue[] = wp_parse_args(array('handle' => $handle), $default);
+            endforeach;
+        endif;
+
+        return $this;
     }
 
     /**
