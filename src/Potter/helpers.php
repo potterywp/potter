@@ -106,5 +106,16 @@ class OPT
  */
 function cleanURI($str)
 {
-    return preg_replace('/(\/+)/', '/', $str);
+    return preg_replace('/([^:])(\/{2,})/', '$1/', $str);
+}
+
+
+/**
+ * @param null $path
+ *
+ * @return string
+ */
+function theme_url($path = null)
+{
+    return cleanURI(THEME_URL . $path);
 }

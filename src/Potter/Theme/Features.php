@@ -368,7 +368,7 @@ EOT;
         $info = parse_url($path);
 
         if (!isset($info['host'])):
-            $path = THEME_URL . '/' . trim($info['path'], '/');
+            return theme_url($info['path']);
         endif;
 
         return cleanURI($path);
