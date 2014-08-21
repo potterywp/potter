@@ -119,7 +119,7 @@ abstract class Type extends Super_Custom_Post_Type
         if (!empty($this->capability_type)) $customizations['capability_type'] = $this->capability_type;
         if (!empty($this->description)) $customizations['description'] = $this->description;
         if (!empty($this->route)):
-            $args['rewrite'] = array('slug' => $this->route, 'with_front' => true);
+            $customizations['rewrite'] = array('slug' => $this->route, 'with_front' => true);
         endif;
         $customizations['labels'] = $this->getLabels();
 
