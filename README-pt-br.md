@@ -100,3 +100,144 @@ $features->setLoginLogo('assets/pub/imgs/login-logo.png', array('width'=>'150px'
 Trabalhar com sites feitos em WP é muito bom, porém há momentos que precisamos deixar determinados recursos mais flexiveis pelo ambiente do usuário final (o cliente), para isso usamos recursos como o Theme Options.
 Há varias formas de se implementar Theme Options, umas mais faceis e/ou robustas que outras. O plugin [option-tree](https://github.com/valendesigns/option-tree) é uma exelente opção para se usar, é facil e flexivel, porém não possui uma interface de desenvolvimento que agrade a todos.
 Por isso o Potter possui um wrapper API que facilita muito o trabalho de desenvolvimento de Theme Options com o option-tree.
+
+### Criando seu ThemeOptions
+
+- Cria uma pasta chamada `/app` dentro da raiz do seu tema `/wp-content/themes/meutema/`
+- Dentro da pasta `app` crie um arquivo chamado `ThemeOptions.php`
+- Dentro de `ThemeOptions.php` coloque o seguinte código:
+
+ ```php
+<?php
+ use Potter\Theme\Options;
+
+ class ThemeOptions extends Options
+ {
+    protected $page_title = 'Opções do Tema';
+    protected $menu_title = 'Opções do Tema';
+    protected $settings_id = 'my_theme_options_id';
+
+    public function doRegister()
+    {
+    }
+ }
+```
+
+> No momento que o Potter inicializar suas configurações ele automaticamente cria uma instancia de `ThemeOptions` então você não precisa fazer mais nada alem de criar o arquivo e colocar suas configurações lá.
+
+### Configurações adcionais
+
+Você ainda tem mais opções disponiveis, que te permitiram custumizar melhor seu ThemeOptions
+ ```php
+ class ThemeOptions extends Options
+ {
+    protected $page_title = 'Theme Options';
+    protected $menu_title = 'Theme Options';
+    protected $settings_id = 'theme_options';
+    protected $header_logo = null;
+    protected $header_version_text = null;
+    protected $header_logo_link = null;
+    protected $show_new_layout = false;
+    protected $show_docs = false;
+    protected $show_pages = false;
+    protected $options_capability = 'edit_theme_options';
+
+    protected $contextual_help
+        = array(
+            'content' => array(),
+            'sidebar' => ''
+        );
+
+```
+
+
+### Adcionando opções
+
+Todas os campos/opções são executados dentro de `doRegister()`
+
+ ```php
+ public function doRegister()
+ {
+    // Primeiro você cria a seção
+    $this->addSection('general', 'Geral')
+        // depois você adcionar as opções, que são automaticamente inseridas na devida seção
+        ->addUpload('logo', 'Logo')
+        ->addText('header_slogan', 'Header Slogan');
+
+    $this->addSection('another_section', 'Another')
+        ->addTextArea('text_impact', 'Text impact')
+        ->addPageSelect('my_page_id', 'Select Page');
+
+
+    // Você não é obrigado a encadear os metodos
+    $this->addSection('more_section', 'GoT');
+    $this->addCustomPostTypeSelect('my_got_id','Select GoT', 'Desc of select', 'got');
+    $this->addCategorySelect('my_cat_id','Select GoT', 'Desc of select', 'got');
+    // As as opções são anexadas automaticamente a última seção configurada.
+
+ }
+```
+
+#### Opções disponíveis
+
+- **addText**
+   `$this->addText($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *text*
+- **addTextarea**
+    `addTextarea($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *textarea*
+- **addSelect**
+   `$this->addSelect($id, $label, array $choices, $desc = null, $std = null, $section = null, array $extra = array())` *field of type select.*
+- **addCheckbox**
+    `$this->addCheckbox($id, $label, array $choices, $desc = null, $std = null, $section = null, array $extra = array())` *field of type checkbox.*
+- **addRadio**
+    `$this->addRadio($id, $label, array $choices, $desc = null, $std = null, $section = null, array $extra = array())` *field of type radio.*
+- **addWYSIWYG**
+    `$this->addWYSIWYG($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *WYSIWYG*
+- **addUpload**
+    `$this->addUpload($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *upload (image)*
+- **addCustomPostTypeSelect**
+    `$this->addCustomPostTypeSelect($id, $label, $desc = null, $postType = 'post', $std = null, $section = null, array $extra = array())` *select type field with custom post type*
+- **addCustomPostTypeCheckbox**
+    `$this->addCustomPostTypeCheckbox($id, $label, $desc = null, $postType = 'post', $std = null, $section = null, array $extra = array())` *checkbox type field with custom post type*
+- **addPageSelect**
+   `$this->addPageSelect($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *select type field with post type page*
+- **addPageCheckbox**
+   `$this->addPageCheckbox($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *checkbox type field with post type page*
+- **addPostCheckbox**
+   `$this->addPageCheckbox($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *checkbox type field with post type post*
+- **addPostSelect**
+   `$this->addPostSelect($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *select type field with post type post*
+- **addTaxonomySelect**
+   `$this->addTaxonomySelect($id, $label, $desc = null, $taxonomy = 'category', $std = null, $section = null, array $extra = array())` *select type field with taxonomy*
+- **addTaxonomyCheckbox**
+   `$this->addTaxonomyCheckbox($id, $label, $desc = null, $taxonomy = 'category', $std = null, $section = null, array $extra = array())` *checkbox type field with taxonomy*
+- **addCategorySelect**
+   `$this->addCategorySelect($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *select type field with categories*
+- **addCategoryCheckbox**
+   `$this->addCategoryCheckbox($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *checkbox type field with categories*
+- **addTagSelect**
+   `$this->addTagSelect($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *select type field with tags*
+- **addTagCheckbox**
+   `$this->addTagCheckbox($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *checkbox type field with tags*
+- **addTypography**
+   `$this->addTypography($id, $label, $desc = null, $std = null, $section = null, array $extra = array())`
+- **addOnOff**
+   `$this->addOnOff($id, $label, $desc = null, $std = null, $section = null, array $extra = array())`
+- **addOption**
+   `$this->addOption(array $args)` Raw data for option.
+
+
+### Recuperando opções
+
+Recuperar os dados salvos no ThemeOptions é muito fácil.
+
+```php
+
+$option_name = OPT::get('option_name', 'default_value');
+
+OPT::_get('option_name', 'default_value'); // echo OPT::get('option_name', 'default_value');
+
+$option = OPT::get_nl2br('option_name', 'default_value'); // $option =  nl2br(OPT::get('option_name', 'default_value'));
+
+OPT::_get_nl2br('option_name', 'default_value') echo nl2br(OPT::get('option_name', 'default_value'));
+
+```
