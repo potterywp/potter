@@ -1,3 +1,34 @@
+Potter
+======
+Conjunto de ferramentas que ajudam a criar sites WordPress mais facilmente.
+
+> Potter ainda esta em fase beta
+
+# Instalação
+
+No seu `composer.json`
+
+```
+"repositories": [{
+      "type": "vcs",
+      "url": "https://github.com/potterywp/meta-box"
+   }],
+   "require": {
+      "potterywp/potter": "dev-master"
+   },
+```
+
+No seu `functions.php`
+
+```php
+   require_once "vendor/autoload.php";
+```
+
+# Características
+
+- **Post/Type** - Crie custom posts types com facilidade e flexibilidade
+- **ThemeOptions** - Opções de tema ficam faceis de serem criados. Potter usa um wrapper para [option-tree](https://github.com/valendesigns/option-tree), melhorando ainda mais o fluxo de desenvolvimento.
+- **Features** - Potter possui uma série de helpers que facilitão a inclusisão de recursos nos seus projetos com Wordpress, como a inclusão de css e javascript com facilidade em suas páginas.
 
 ## Features
 
@@ -97,13 +128,13 @@ $features->setLoginLogo('assets/pub/imgs/login-logo.png', array('width'=>'150px'
 
 ## Opções do tema
 
-Trabalhar com sites feitos em WP é muito bom, porém há momentos que precisamos deixar determinados recursos mais flexiveis pelo ambiente do usuário final (o cliente), para isso usamos recursos como o Theme Options.
-Há varias formas de se implementar Theme Options, umas mais faceis e/ou robustas que outras. O plugin [option-tree](https://github.com/valendesigns/option-tree) é uma exelente opção para se usar, é facil e flexivel, porém não possui uma interface de desenvolvimento que agrade a todos.
+Trabalhar com sites feitos em WP é muito bom, porém há momentos que precisamos deixar determinados recursos mais flexiveis pelo ambiente do usuário final (o cliente), para isso usamos recursos como o Theme Options.  
+Há varias formas de se implementar Theme Options, umas mais faceis e/ou robustas que outras. O plugin [option-tree](https://github.com/valendesigns/option-tree) é uma exelente opção para se usar, é facil e flexivel, porém não possui uma interface de desenvolvimento que agrade a todos.  
 Por isso o Potter possui um wrapper API que facilita muito o trabalho de desenvolvimento de Theme Options com o option-tree.
 
 ### Criando seu ThemeOptions
 
-- Cria uma pasta chamada `/app` dentro da raiz do seu tema `/wp-content/themes/meutema/`
+- Crie uma pasta chamada `/app` dentro da raiz do seu tema `/wp-content/themes/meutema/`
 - Dentro da pasta `app` crie um arquivo chamado `ThemeOptions.php`
 - Dentro de `ThemeOptions.php` coloque o seguinte código:
 
@@ -163,66 +194,66 @@ Todas os campos/opções são executados dentro de `doRegister()`
         // depois você adcionar as opções, que são automaticamente inseridas na devida seção
         ->addUpload('logo', 'Logo')
         ->addText('header_slogan', 'Header Slogan');
-
+    
     $this->addSection('another_section', 'Another')
         ->addTextArea('text_impact', 'Text impact')
         ->addPageSelect('my_page_id', 'Select Page');
-
-
+    
+    
     // Você não é obrigado a encadear os metodos
     $this->addSection('more_section', 'GoT');
     $this->addCustomPostTypeSelect('my_got_id','Select GoT', 'Desc of select', 'got');
     $this->addCategorySelect('my_cat_id','Select GoT', 'Desc of select', 'got');
     // As as opções são anexadas automaticamente a última seção configurada.
-
+    
  }
 ```
 
 #### Opções disponíveis
 
-- **addText**
+- **addText**   
    `$this->addText($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *text*
-- **addTextarea**
+- **addTextarea**   
     `addTextarea($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *textarea*
-- **addSelect**
+- **addSelect**    
    `$this->addSelect($id, $label, array $choices, $desc = null, $std = null, $section = null, array $extra = array())` *field of type select.*
-- **addCheckbox**
+- **addCheckbox**     
     `$this->addCheckbox($id, $label, array $choices, $desc = null, $std = null, $section = null, array $extra = array())` *field of type checkbox.*
-- **addRadio**
+- **addRadio**  
     `$this->addRadio($id, $label, array $choices, $desc = null, $std = null, $section = null, array $extra = array())` *field of type radio.*
-- **addWYSIWYG**
+- **addWYSIWYG**  
     `$this->addWYSIWYG($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *WYSIWYG*
-- **addUpload**
+- **addUpload**  
     `$this->addUpload($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *upload (image)*
-- **addCustomPostTypeSelect**
-    `$this->addCustomPostTypeSelect($id, $label, $desc = null, $postType = 'post', $std = null, $section = null, array $extra = array())` *select type field with custom post type*
-- **addCustomPostTypeCheckbox**
-    `$this->addCustomPostTypeCheckbox($id, $label, $desc = null, $postType = 'post', $std = null, $section = null, array $extra = array())` *checkbox type field with custom post type*
-- **addPageSelect**
+- **addCustomPostTypeSelect**  
+    `$this->addCustomPostTypeSelect($id, $label, $desc = null, $postType = 'post', $std = null, $section = null, array $extra = array())` *select type field with custom post type*  
+- **addCustomPostTypeCheckbox**   
+    `$this->addCustomPostTypeCheckbox($id, $label, $desc = null, $postType = 'post', $std = null, $section = null, array $extra = array())` *checkbox type field with custom post type*  
+- **addPageSelect**  
    `$this->addPageSelect($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *select type field with post type page*
-- **addPageCheckbox**
+- **addPageCheckbox**  
    `$this->addPageCheckbox($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *checkbox type field with post type page*
-- **addPostCheckbox**
+- **addPostCheckbox**  
    `$this->addPageCheckbox($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *checkbox type field with post type post*
-- **addPostSelect**
+- **addPostSelect**  
    `$this->addPostSelect($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *select type field with post type post*
-- **addTaxonomySelect**
+- **addTaxonomySelect**  
    `$this->addTaxonomySelect($id, $label, $desc = null, $taxonomy = 'category', $std = null, $section = null, array $extra = array())` *select type field with taxonomy*
-- **addTaxonomyCheckbox**
+- **addTaxonomyCheckbox**  
    `$this->addTaxonomyCheckbox($id, $label, $desc = null, $taxonomy = 'category', $std = null, $section = null, array $extra = array())` *checkbox type field with taxonomy*
-- **addCategorySelect**
+- **addCategorySelect**  
    `$this->addCategorySelect($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *select type field with categories*
-- **addCategoryCheckbox**
+- **addCategoryCheckbox**  
    `$this->addCategoryCheckbox($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *checkbox type field with categories*
-- **addTagSelect**
+- **addTagSelect**  
    `$this->addTagSelect($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *select type field with tags*
-- **addTagCheckbox**
+- **addTagCheckbox**  
    `$this->addTagCheckbox($id, $label, $desc = null, $std = null, $section = null, array $extra = array())` *checkbox type field with tags*
-- **addTypography**
+- **addTypography**  
    `$this->addTypography($id, $label, $desc = null, $std = null, $section = null, array $extra = array())`
-- **addOnOff**
+- **addOnOff**  
    `$this->addOnOff($id, $label, $desc = null, $std = null, $section = null, array $extra = array())`
-- **addOption**
+- **addOption**  
    `$this->addOption(array $args)` Raw data for option.
 
 
@@ -240,4 +271,142 @@ $option = OPT::get_nl2br('option_name', 'default_value'); // $option =  nl2br(OP
 
 OPT::_get_nl2br('option_name', 'default_value') echo nl2br(OPT::get('option_name', 'default_value'));
 
+```
+
+## Post Types / Models
+
+Não são raros os momentos onde precisamos criar custom post para atender as exigencias dos projetos.  
+Potter possui uma API que tem como objetivo facilitar esse trabalho, que as vezes tende a ser chato e complicado. 
+
+A API do Potter foi feita sobre o [Super-CTP](https://github.com/mboynes/super-cpt)
+
+### Criando um PostType
+
+Crie uma pasta chamada `/app/models` dentro da raiz do seu tema `/wp-content/themes/meutema/`   
+Dentro da pasta `/app/models` você vai criar um arquivo/classe para cada post type que deseja criar, a classe deve possuir o mesmo nome que o arquivo.
+
+> Por conversão use *CamelCase* para criar as classes, e para melhor identifica-lás acressente *Type* ou *Model* ao final do nome.  
+Ex: `SliderModel.php` ou `SliderType.php`   
+O Potter automaticamente criará o post type 'slider'
+
+
+
+`SliderType.php`
+
+O conteúdo do arquivo deve ficar assim:
+
+```php
+<?php
+
+use Potter\Post\Type;
+
+class SliderType extends Type
+{
+	protected $supports = array('title', 'thumbnail');
+	protected $public = false;
+	protected $show_ui = true;
+	public $icon = 'picture-o';
+}
+```
+
+### Configurações disponiveis
+Há ainda várias configurações disponiveis.
+
+```php
+<?php
+
+use Potter\Post\Type;
+
+class SliderType extends Type
+{
+    public $type = 'carrocel'; // força o post type da classe
+    protected $taxonomies = array();
+    protected $labels = array();
+    protected $capabilities = array();
+    protected $args = array();
+    protected $supports = array();
+    public $icon = 'dashicons-admin-post';
+    protected $capability_type = 'page';
+    protected $public;
+    protected $show_ui;
+    protected $description;
+    protected $route;
+    protected $queryArgs = array();
+
+    protected $meta_boxes = array();
+}
+```
+
+Você pode extender qualquer atributo ou método da classe [`Super_Custom_Post_Type.php`](https://github.com/mboynes/super-cpt/blob/master/includes/class-super-custom-post-type.php)
+
+### Meta-Boxes
+O próprio Super-CTP possui um sistema de meta-boxes, porem ele é um pouco limitado. Potter usa o plugin  [meta-box](https://github.com/rilwis/meta-box) que proporciona muito mais flixebilidade e opções.
+
+Para cadastrar uma meta-box a um post-type acressente as opções desejadas ao atributo `$meta_boxex`  
+
+```php
+protected $meta_boxes
+        = array(
+            'metabox-id' => array(
+                'title' => 'Dados do slider',
+                'fields' => array(
+                    array(
+                        'name' => 'link',
+                        'id' => 'link',
+                        'type' => 'text',
+                        'clone' => false,
+                    ),
+                    array(
+                        'name' => 'Target',
+                        'id' => 'target',
+                        'type' => 'select',
+                        'options' => array(
+                            '_new',
+                            '_self',
+                        )
+                    )
+                )
+            )
+        );
+```
+
+Todas as configurações do [meta-box](https://github.com/rilwis/meta-box) estão disponiveis
+
+### Post Type Query
+
+O uso do WP_Query por muitas vezes é complicado, e não fornece uma API muito bonita de de trabalhar. Com o Potter fica muito fácil executar consultas.
+
+### Instanciando a Query
+No local onde deseja executar a sua consulta, você pode usar o seguinte comando.
+
+```php
+// Retorna um objeto WP_Query
+$sliders = \Potter\Potter::model('slider')->all(); // passe como parametro o nome do model/post type que você criou
+
+// Nada muda no seu código
+if($query->have_posts()):
+    while($query->have_posts()): $query->the_post()
+        /// 
+    endwhile;
+endif;
+
+```
+
+Há varios métodos disponíveis.
+
+```php
+// Retorna um objeto Potter/Post/ModelQuery
+$slidersQuery = \Potter\Potter::model('slider'); // passe como parametro o nome do model/post type que você criou
+
+// Retorna um objeto WP_Query
+$slidersQuery->perPage(15)->order('author')->exclude(99)->exe();
+
+// Retorna um objeto WP_Query
+$slidersQuery->perPage(15)->exe();
+$slidersQuery->exe($args = array()); // Passe parametros extras diretamente para o WP_Query
+$slidersQuery->get(5, $args = array()) // Uma quantidade limitada de resultados
+
+// Retorna um objeto WP_Query
+$slidersQuery->perPage(5)->byParent(9) // Páginas filhas do ID 9
+$slidersQuery->perPage(5)->exclude(get_the_ID())->byParent(9) // Páginas filhas do ID 9, menos a página atual
 ```
