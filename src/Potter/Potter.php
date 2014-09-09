@@ -2,6 +2,7 @@
 namespace Potter;
 
 use OPT;
+use Potter\Post\Query;
 use Potter\Post\QueryModel;
 use Potter\Theme\Features;
 use Potter\Utils\Metabox;
@@ -42,6 +43,20 @@ class Potter
         $_PostType = self::core()->getModels()->get($name);
 
         $query = new QueryModel($_PostType);
+
+        return $query;
+    }
+
+    /**
+     * @param string $postType
+     * @param array  $args
+     *
+     * @return Query
+     */
+    public static function query($postType, $args = array())
+    {
+
+        $query = new Query($args, $postType);
 
         return $query;
     }
