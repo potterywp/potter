@@ -14,7 +14,7 @@ No seu `composer.json`
       "url": "https://github.com/potterywp/meta-box"
    }],
    "require": {
-      "potterywp/potter": "dev-master"
+      "potterywp/potter": "1.1"
    },
 ```
 
