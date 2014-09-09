@@ -8,9 +8,6 @@
     }],
     "repositories": [{
         "type": "vcs",
-        "url": "https://github.com/potterywp/super-cpt"
-    }, {
-        "type": "vcs",
         "url": "https://github.com/potterywp/meta-box"
     }],
     "require": {
