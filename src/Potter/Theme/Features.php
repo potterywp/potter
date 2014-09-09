@@ -80,9 +80,9 @@ class Features
      *
      * @return $this
      */
-    public function addThemeSupport($feature)
+    public function addThemeSupport($feature, $arguments = array())
     {
-        $this->themeSupport[] = $feature;
+        $this->themeSupport[] = array($feature, $arguments);
 
         return $this;
     }
@@ -101,10 +101,10 @@ class Features
     }
 
     /**
-     * @param string $handle
-     * @param string $src
+     * @param        $handle
+     * @param bool   $src
      * @param array  $deps
-     * @param bool   $ver
+     * @param null   $ver
      * @param string $media
      *
      * @return $this
@@ -272,7 +272,7 @@ EOT;
 
         // Theme Support
         foreach ($this->themeSupport as $feature):
-            add_theme_support($feature);
+            add_theme_support($feature[0], $feature[1]);
         endforeach;
 
         // Post Type Support
