@@ -14,7 +14,7 @@ define('THEME_URL', trailingslashit(get_template_directory_uri()));
 $RWMB_URL = THEME_URL . 'vendor/rilwis/meta-box/';
 $RWMB_DIR = THEME_DIR . 'vendor/rilwis/meta-box/';
 
-RWMB_Loader::loader($RWMB_URL, $RWMB_DIR);
+RWMB_Loader::load($RWMB_URL, $RWMB_DIR);
 
 // Init potter
 global $potter, $features;
