@@ -9,12 +9,12 @@ Conjunto de ferramentas que ajudam a criar sites WordPress mais facilmente.
 No seu `composer.json`
 
 ```
-"repositories": [{
+    "repositories": [{
       "type": "vcs",
       "url": "https://github.com/potterywp/meta-box"
-   }],
-   "require": {
-      "potterywp/potter": "1.1"
+    }],
+    "require": {
+      "potterywp/potter": "1.1.1"
    },
 ```
 
@@ -269,7 +269,7 @@ OPT::_get('option_name', 'default_value'); // echo OPT::get('option_name', 'defa
 
 $option = OPT::get_nl2br('option_name', 'default_value'); // $option =  nl2br(OPT::get('option_name', 'default_value'));
 
-OPT::_get_nl2br('option_name', 'default_value') echo nl2br(OPT::get('option_name', 'default_value'));
+OPT::_get_nl2br('option_name', 'default_value') // echo nl2br(OPT::get('option_name', 'default_value'));
 
 ```
 
