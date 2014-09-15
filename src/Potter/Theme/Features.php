@@ -76,13 +76,14 @@ class Features
     }
 
     /**
-     * @param string $name
+     * @param string $feature
+     * @param array  $arguments
      *
      * @return $this
      */
     public function addThemeSupport($feature, $arguments = array())
     {
-        $this->themeSupport[] = array($feature, $arguments);
+        $this->themeSupport[$feature] = $arguments;
 
         return $this;
     }
@@ -271,8 +272,12 @@ EOT;
         endforeach;
 
         // Theme Support
-        foreach ($this->themeSupport as $feature):
-            add_theme_support($feature[0], $feature[1]);
+        foreach ($this->themeSupport as $feature => $args):
+            if (empty($args)):
+                add_theme_support($feature);
+            else:
+                add_theme_support($feature, $args);
+            endif;
         endforeach;
 
         // Post Type Support
