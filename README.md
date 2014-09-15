@@ -9,10 +9,6 @@ Conjunto de ferramentas que ajudam a criar sites WordPress mais facilmente.
 No seu `composer.json`
 
 ```
-    "repositories": [{
-      "type": "vcs",
-      "url": "https://github.com/potterywp/meta-box"
-    }],
     "require": {
       "potterywp/potter": "1.1.3"
    },
