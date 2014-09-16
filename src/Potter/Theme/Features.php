@@ -7,6 +7,7 @@ class Features
     protected $menus = array();
     protected $themeSupport = array();
     protected $postSupport = array();
+    protected $sidebars = array();
     protected $css = array();
     protected $js = array();
     protected $jsEnqueue = array();
@@ -30,6 +31,8 @@ class Features
     public function __construct()
     {
         add_action('after_setup_theme', array($this, '_after_setup_theme'));
+
+        add_action('widgets_init', array($this, '_widgets_init'));
 
         add_action('wp_enqueue_scripts', array($this, '_wp_enqueue_scripts'), 100);
 
@@ -102,7 +105,19 @@ class Features
     }
 
     /**
-     * @param        $handle
+     * @param array $sidebar
+     *
+     * @return $this
+     */
+    public function addSidebar(array $sidebar)
+    {
+        $this->sidebars[] = $sidebar;
+
+        return $this;
+    }
+
+    /**
+     * @param string $handle
      * @param bool   $src
      * @param array  $deps
      * @param null   $ver
@@ -283,6 +298,13 @@ EOT;
         // Post Type Support
         foreach ($this->postSupport as $post_type => $feature):
             add_post_type_support($post_type, $feature);
+        endforeach;
+    }
+
+    public function _widgets_init()
+    {
+        foreach ($this->sidebars as $sidebar):
+            register_sidebar($sidebar);
         endforeach;
     }
 
