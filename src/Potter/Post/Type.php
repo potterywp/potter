@@ -3,8 +3,8 @@
 namespace Potter\Post;
 
 use Illuminate\Support\Str;
-use Super_Custom_Post_Type;
 use Potter\Utils\Metabox;
+use Super_Custom_Post_Type;
 
 abstract class Type extends Super_Custom_Post_Type
 {
@@ -93,16 +93,16 @@ abstract class Type extends Super_Custom_Post_Type
     protected function parseMetaboxes()
     {
         $default = array(
-           'title'    => __('Data'),
-           'pages'    => array($this->getPostType()),
-           'context'  => 'normal',
-           'priority' => 'high',
-           'fields'   => array()
+            'title'    => __('Data'),
+            'pages'    => array($this->getPostType()),
+            'context'  => 'normal',
+            'priority' => 'high',
+            'fields'   => array()
         );
 
         foreach ($this->meta_boxes as $key => $mbox):
             $default['id'] = $key;
-            $attributes    = wp_parse_args($mbox, $default);
+            $attributes = wp_parse_args($mbox, $default);
 
             new Metabox($attributes);
 
@@ -136,22 +136,22 @@ abstract class Type extends Super_Custom_Post_Type
     private function getLabels()
     {
         return wp_parse_args(
-           $this->labels,
-           array(
-              'name'               => __($this->plural),
-              'singular_name'      => __($this->singular),
-              'menu_name'          => __($this->plural),
-              'parent_item_colon'  => __('Parent Item:'),
-              'all_items'          => __($this->plural),
-              'view_item'          => __('View') . ' ' . __($this->plural),
-              'add_new_item'       => __('Add') . ' ' . __($this->singular),
-              'add_new'            => __('Add') . ' ' . __($this->singular),
-              'edit_item'          => __('Edit') . ' ' . __($this->singular),
-              'update_item'        => __('Update') . ' ' . __($this->singular),
-              'search_items'       => __('Search') . ' ' . __($this->singular),
-              'not_found'          => __('Not found'),
-              'not_found_in_trash' => __('Not found in Trash'),
-           )
+            $this->labels,
+            array(
+                'name'               => __($this->plural),
+                'singular_name'      => __($this->singular),
+                'menu_name'          => __($this->plural),
+                'parent_item_colon'  => __('Parent Item:'),
+                'all_items'          => __($this->plural),
+                'view_item'          => __('View') . ' ' . __($this->plural),
+                'add_new_item'       => __('Add') . ' ' . __($this->singular),
+                'add_new'            => __('Add') . ' ' . __($this->singular),
+                'edit_item'          => __('Edit') . ' ' . __($this->singular),
+                'update_item'        => __('Update') . ' ' . __($this->singular),
+                'search_items'       => __('Search') . ' ' . __($this->singular),
+                'not_found'          => __('Not found'),
+                'not_found_in_trash' => __('Not found in Trash'),
+            )
         );
     }
 

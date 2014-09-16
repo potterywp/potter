@@ -36,8 +36,8 @@ class PotterCore
 
     public function __construct()
     {
-        $this->themeDIR  = THEME_DIR;
-        $this->themeURL  = THEME_URL;
+        $this->themeDIR = THEME_DIR;
+        $this->themeURL = THEME_URL;
         $SCPT_PLUGIN_URL = $this->themeURL . 'vendor/potterywp/super-cpt/';
         $SCPT_PLUGIN_DIR = $this->themeDIR . 'vendor/potterywp/super-cpt';
 
@@ -53,7 +53,7 @@ class PotterCore
     public function autoload()
     {
         $folders = apply_filters('potter_autoload_folders', $this->autoloadFolders);
-        $files   = apply_filters('potter_autoload_files', $this->autolaodFiles);
+        $files = apply_filters('potter_autoload_files', $this->autolaodFiles);
 
         // Files
         foreach ($files as $file) {
@@ -75,6 +75,7 @@ class PotterCore
 
     /**
      * @param $file
+     *
      * @return mixed
      */
     public function  loadFile($file)

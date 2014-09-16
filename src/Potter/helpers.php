@@ -86,6 +86,7 @@ class OPT
     public static function __callStatic($name, $args)
     {
         $default = (empty($args)) ? null : $args[0];
+
         return self::get($name, $default);
     }
 

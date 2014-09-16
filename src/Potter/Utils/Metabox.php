@@ -56,17 +56,17 @@ class Metabox extends Collection
 
     /**
      * @param string $id
-     * @param array  $attibutes
+     * @param array  $attributes
      *
      * @return $this
      */
-    public function addField($id, array $attibutes)
+    public function addField($id, array $attributes)
     {
-        if (is_string($id) and !isset($attibutes['id'])):
-            $attibutes['id'] = $id;
+        if (is_string($id) and !isset($attributes['id'])):
+            $attributes['id'] = $id;
         endif;
 
-        $this->push($attibutes);
+        $this->push($attributes);
 
         return $this;
     }

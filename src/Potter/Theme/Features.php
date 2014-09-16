@@ -12,17 +12,17 @@ class Features
     protected $js = array();
     protected $jsEnqueue = array();
     protected $jQueryCDN
-       = array(
-          'cdn_url'   => null,
-          'fallback'  => null,
-          'migrate'   => null,
-          'in_footer' => false,
-       );
+        = array(
+            'cdn_url'   => null,
+            'fallback'  => null,
+            'migrate'   => null,
+            'in_footer' => false,
+        );
     protected $customLoginLogo
-       = array(
-          'logo_url' => null,
-          'style'    => array()
-       );
+        = array(
+            'logo_url' => null,
+            'style'    => array()
+        );
 
     public static $jQueryCDN_URL = '//ajax.googleapis.com/ajax/libs/jquery/%1s/jquery.min.js';
     public static $GOOGLE_ANALYTICS_ID = false;
@@ -67,10 +67,10 @@ class Features
     public function addImageSize($name, $width = 0, $height = 0, $crop = false)
     {
         $size = array(
-           'name'   => $name,
-           'width'  => $width,
-           'height' => $height,
-           'crop'   => $crop
+            'name'   => $name,
+            'width'  => $width,
+            'height' => $height,
+            'crop'   => $crop
         );
 
         $this->imagesSize[] = $size;
@@ -128,11 +128,11 @@ class Features
     public function addCss($handle, $src = false, $deps = array(), $ver = null, $media = 'all')
     {
         $this->css[] = array(
-           'handle' => $handle,
-           'src'    => $this->prepUrl($src),
-           'deps'   => $deps,
-           'ver'    => $ver,
-           'media'  => $media
+            'handle' => $handle,
+            'src'    => $this->prepUrl($src),
+            'deps'   => $deps,
+            'ver'    => $ver,
+            'media'  => $media
         );
 
         return $this;
@@ -150,11 +150,11 @@ class Features
     public function addJs($handle, $src, $deps = array(), $ver = null, $in_footer = false)
     {
         $this->js[] = array(
-           'handle'    => $handle,
-           'src'       => $this->prepUrl($src),
-           'deps'      => $deps,
-           'ver'       => $ver,
-           'in_footer' => $in_footer
+            'handle'    => $handle,
+            'src'       => $this->prepUrl($src),
+            'deps'      => $deps,
+            'ver'       => $ver,
+            'in_footer' => $in_footer
         );
 
         $this->addJsEnqueue($handle);
@@ -200,11 +200,11 @@ class Features
     public function addJsEnqueue($handle, $src = false, $deps = array(), $ver = false, $in_footer = false)
     {
         $this->jsEnqueue[] = array(
-           'handle'    => $handle,
-           'src'       => $src,
-           'deps'      => $deps,
-           'ver'       => $ver,
-           'in_footer' => $in_footer
+            'handle'    => $handle,
+            'src'       => $src,
+            'deps'      => $deps,
+            'ver'       => $ver,
+            'in_footer' => $in_footer
         );
 
         return $this;
@@ -222,9 +222,9 @@ class Features
     {
         $cdnUrl = sprintf(self::$jQueryCDN_URL, $version);
 
-        $this->jQueryCDN['cdn_url']   = $cdnUrl;
-        $this->jQueryCDN['fallback']  = ($fallback) ? $this->prepUrl($fallback) : null;
-        $this->jQueryCDN['migrate']   = ($migrate) ? $this->prepUrl($migrate) : null;
+        $this->jQueryCDN['cdn_url'] = $cdnUrl;
+        $this->jQueryCDN['fallback'] = ($fallback) ? $this->prepUrl($fallback) : null;
+        $this->jQueryCDN['migrate'] = ($migrate) ? $this->prepUrl($migrate) : null;
         $this->jQueryCDN['in_footer'] = $in_footer;
 
         return $this;
@@ -251,7 +251,7 @@ class Features
     public function setLoginLogo($logo, $style = array())
     {
         $this->customLoginLogo['logo_url'] = $this->prepUrl($logo);
-        $this->customLoginLogo['style']    = $style;
+        $this->customLoginLogo['style'] = $style;
 
         return $this;
     }
@@ -340,11 +340,11 @@ EOT;
         //JS Enqueue
         foreach ($this->jsEnqueue as $enqueue):
             wp_enqueue_script(
-               $enqueue['handle'],
-               $enqueue['src'],
-               $enqueue['deps'],
-               $enqueue['ver'],
-               $enqueue['in_footer']
+                $enqueue['handle'],
+                $enqueue['src'],
+                $enqueue['deps'],
+                $enqueue['ver'],
+                $enqueue['in_footer']
             );
         endforeach;
     }
@@ -352,7 +352,7 @@ EOT;
     public function _login_enqueue_scripts()
     {
         if (!empty($this->customLoginLogo['logo_url'])):
-            $logo  = $this->customLoginLogo['logo_url'];
+            $logo = $this->customLoginLogo['logo_url'];
             $style = $this->customLoginLogo['style'];
 
             $output = array('<style> body.login div#login h1 a{ background-image: url(' . $logo . '); ');
@@ -369,7 +369,7 @@ EOT;
     {
         if (self::$add_jquery_fallback):
             echo '<script>window.jQuery||document.write(\'<script src="' . $this->jQueryCDN['fallback'] .
-               '"><\/script>\')</script>' . "\n";
+                '"><\/script>\')</script>' . "\n";
             self::$add_jquery_fallback = false;
         endif;
 
@@ -390,10 +390,10 @@ EOT;
         $this->jsEnqueue = array();
 
         $default = array(
-           'src'       => false,
-           'deps'      => array(),
-           'ver'       => false,
-           'in_footer' => false
+            'src'       => false,
+            'deps'      => array(),
+            'ver'       => false,
+            'in_footer' => false
         );
 
         if ($this->ArrayIsMulti($data)):
@@ -419,6 +419,7 @@ EOT;
         foreach ($array as $v) {
             if (is_array($v)) return true;
         }
+
         return false;
     }
 

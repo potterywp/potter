@@ -24,6 +24,7 @@ class Query
 
     /**
      * @param $type
+     *
      * @return Query
      */
     public function postType($type)
@@ -34,6 +35,7 @@ class Query
     /**
      * @param $key
      * @param $value
+     *
      * @return Query;
      */
     private function put($key, $value)
@@ -45,6 +47,7 @@ class Query
 
     /**
      * @param $perPage
+     *
      * @return Query
      */
     public function perPage($perPage)
@@ -54,6 +57,7 @@ class Query
 
     /**
      * @param $value
+     *
      * @return Query
      */
     public function order($value)
@@ -63,6 +67,7 @@ class Query
 
     /**
      * @param $value
+     *
      * @return Query
      */
     public function orderBy($value)
@@ -71,8 +76,9 @@ class Query
     }
 
     /**
-     * @param int $limit
+     * @param int   $limit
      * @param array $args
+     *
      * @return WP_Query
      */
     public function get($limit, $args = array())
@@ -86,29 +92,41 @@ class Query
 
     /**
      * @param $id
+     *
+     * @return WP_Query
      */
     public function byParent($id)
     {
-        $this->put('post_parent', $id)->exe();
+        return $this->put('post_parent', $id)->exe();
     }
 
     /**
      * @param $ids
+     *
+     * @return WP_Query
      */
     public function byParents($ids)
     {
         $ids = (array)$ids;
-        $this->put('post_parent__in', $ids)->exe();
+
+        return $this->put('post_parent__in', $ids)->exe();
     }
 
+    /**
+     * @param $ids
+     *
+     * @return Query
+     */
     public function exclude($ids)
     {
         $ids = (array)$ids;
+
         return $this->put('post__not_in', $ids);
     }
 
     /**
      * @param $id
+     *
      * @return WP_Query
      */
     function byID($id)
@@ -118,6 +136,7 @@ class Query
 
     /**
      * @param $ids
+     *
      * @return WP_Query
      */
     function byIDs($ids)
@@ -127,6 +146,7 @@ class Query
 
     /**
      * @param array|int $id
+     *
      * @return WP_Query
      */
     public function notID($id)
@@ -136,6 +156,7 @@ class Query
 
     /**
      * @param array $ids
+     *
      * @return WP_Query
      */
     public function notIDs($ids)
@@ -164,6 +185,7 @@ class Query
 
     /**
      * @param $key
+     *
      * @return mixed
      */
     public function __get($key)
@@ -174,6 +196,7 @@ class Query
     /**
      * @param $key
      * @param $value
+     *
      * @return Query
      */
     public function __set($key, $value)
@@ -184,6 +207,7 @@ class Query
     /**
      * @param $name
      * @param $args
+     *
      * @return Query
      */
     public function __call($name, $args)

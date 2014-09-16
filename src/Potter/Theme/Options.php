@@ -3,24 +3,23 @@ namespace Potter\Theme;
 
 abstract class Options
 {
-    protected $page_title = 'Theme Options';
-    protected $menu_title = 'Theme Options';
-    protected $settings_id = 'theme_options';
-    protected $header_logo = null;
+    protected $page_title          = 'Theme Options';
+    protected $menu_title          = 'Theme Options';
+    protected $settings_id         = 'theme_options';
+    protected $header_logo         = null;
     protected $header_version_text = null;
-    protected $header_logo_link = null;
-    protected $show_new_layout = false;
-    protected $show_docs = false;
-    protected $show_pages = false;
-    protected $options_capability = 'edit_theme_options';
+    protected $header_logo_link    = null;
+    protected $show_new_layout     = false;
+    protected $show_docs           = false;
+    protected $show_pages          = false;
+    protected $options_capability  = 'edit_theme_options';
 
-    protected $contextual_help
-        = array(
-            'content' => array(),
-            'sidebar' => ''
-        );
-    protected $sections = array();
-    protected $settings = array();
+    protected $contextual_help = array(
+        'content' => array(),
+        'sidebar' => ''
+    );
+    protected $sections        = array();
+    protected $settings        = array();
 
     protected $current_section = null;
 
@@ -235,7 +234,7 @@ abstract class Options
      * @param string $desc
      * @param string $std
      * @param string $section
-     * @param array $extra
+     * @param array  $extra
      *
      * @return $this
      */
@@ -262,7 +261,7 @@ abstract class Options
      * @param string $desc
      * @param string $std
      * @param string $section
-     * @param array $extra
+     * @param array  $extra
      *
      * @return $this
      */
@@ -285,12 +284,12 @@ abstract class Options
     }
 
     /**
-     * @param        $id
-     * @param        $label
+     * @param string $id
+     * @param string $label
      * @param string $desc
      * @param string $std
      * @param string $section
-     * @param array $extra
+     * @param array  $extra
      *
      * @return $this
      */
@@ -312,12 +311,12 @@ abstract class Options
     }
 
     /**
-     * @param        $id
-     * @param        $label
+     * @param string $id
+     * @param string $label
      * @param string $desc
      * @param string $std
      * @param string $section
-     * @param array $extra
+     * @param array  $extra
      *
      * @return $this
      */
@@ -341,12 +340,11 @@ abstract class Options
     /**
      * @param string $id
      * @param string $label
-     * @param string $desc
-     * @param string $std
-     * @param string $section
-     * @param array $extra
+     * @param null   $desc
+     * @param null   $section
+     * @param array  $extra
      *
-     * @return $this
+     * @return Options
      */
     public function addTextblock($id, $label, $desc = null, $section = null, array $extra = array())
     {
@@ -366,12 +364,11 @@ abstract class Options
     /**
      * @param string $id
      * @param string $label
-     * @param string $desc
-     * @param string $std
-     * @param string $section
-     * @param array $extra
+     * @param null   $desc
+     * @param null   $section
+     * @param array  $extra
      *
-     * @return $this
+     * @return Options
      */
     public function addTextblockTitled($id, $label, $desc = null, $section = null, array $extra = array())
     {
@@ -396,7 +393,7 @@ abstract class Options
      * @param string $postType
      * @param string $std
      * @param string $section
-     * @param array $extra
+     * @param array  $extra
      *
      * @return $this
      */
@@ -431,7 +428,7 @@ abstract class Options
      * @param string $postType
      * @param string $std
      * @param string $section
-     * @param array $extra
+     * @param array  $extra
      *
      * @return $this
      */
@@ -465,7 +462,7 @@ abstract class Options
      * @param string $desc
      * @param string $std
      * @param string $section
-     * @param array $extra
+     * @param array  $extra
      *
      * @return $this
      */
@@ -480,7 +477,7 @@ abstract class Options
      * @param string $desc
      * @param string $std
      * @param string $section
-     * @param array $extra
+     * @param array  $extra
      *
      * @return $this
      */
@@ -495,7 +492,7 @@ abstract class Options
      * @param string $desc
      * @param string $std
      * @param string $section
-     * @param array $extra
+     * @param array  $extra
      *
      * @return $this
      */
@@ -510,7 +507,7 @@ abstract class Options
      * @param string $desc
      * @param string $std
      * @param string $section
-     * @param array $extra
+     * @param array  $extra
      *
      * @return $this
      */
@@ -526,7 +523,7 @@ abstract class Options
      * @param string $taxonomy
      * @param string $std
      * @param string $section
-     * @param array $extra
+     * @param array  $extra
      *
      * @return $this
      */
@@ -561,7 +558,7 @@ abstract class Options
      * @param string $taxonomy
      * @param string $std
      * @param string $section
-     * @param array $extra
+     * @param array  $extra
      *
      * @return $this
      */
@@ -595,7 +592,7 @@ abstract class Options
      * @param string $desc
      * @param string $std
      * @param string $section
-     * @param array $extra
+     * @param array  $extra
      *
      * @return $this
      */
@@ -610,7 +607,7 @@ abstract class Options
      * @param string $desc
      * @param string $std
      * @param string $section
-     * @param array $extra
+     * @param array  $extra
      *
      * @return $this
      */
@@ -625,7 +622,7 @@ abstract class Options
      * @param string $desc
      * @param string $std
      * @param string $section
-     * @param array $extra
+     * @param array  $extra
      *
      * @return $this
      */
@@ -640,7 +637,7 @@ abstract class Options
      * @param string $desc
      * @param string $std
      * @param string $section
-     * @param array $extra
+     * @param array  $extra
      *
      * @return $this
      */
@@ -655,7 +652,7 @@ abstract class Options
      * @param string $desc
      * @param string $std
      * @param string $section
-     * @param array $extra
+     * @param array  $extra
      *
      * @return $this
      */
@@ -679,11 +676,11 @@ abstract class Options
     /**
      * @param string $id
      * @param string $label
-     * @param array $choices
+     * @param array  $choices
      * @param string $desc
      * @param string $std
      * @param string $section
-     * @param array $extra
+     * @param array  $extra
      *
      * @return $this
      */
@@ -716,11 +713,11 @@ abstract class Options
     /**
      * @param string $id
      * @param string $label
-     * @param array $choices
+     * @param array  $choices
      * @param string $desc
      * @param string $std
      * @param string $section
-     * @param array $extra
+     * @param array  $extra
      *
      * @return $this
      */
@@ -753,11 +750,11 @@ abstract class Options
     /**
      * @param string $id
      * @param string $label
-     * @param array $choices
+     * @param array  $choices
      * @param string $desc
      * @param string $std
      * @param string $section
-     * @param array $extra
+     * @param array  $extra
      *
      * @return $this
      */
@@ -793,7 +790,7 @@ abstract class Options
      * @param string $desc
      * @param string $std
      * @param string $section
-     * @param array $extra
+     * @param array  $extra
      *
      * @return $this
      */
@@ -814,7 +811,5 @@ abstract class Options
 
     }
 
-    public function doRegister()
-    {
-    }
+    abstract function doRegister();
 }
