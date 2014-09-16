@@ -10,7 +10,7 @@ No seu `composer.json`
 
 ```
     "require": {
-      "potterywp/potter": "1.1.3"
+      "potterywp/potter": "1.*"
    },
 ```
 
