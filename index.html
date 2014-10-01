@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Potter by potterywp</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Potter</h1>
+          <h2>Conjunto de ferramentas que ajudam a criar sites WordPress mais facilmente.</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/potterywp/potter/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/potterywp/potter/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/potterywp/potter" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a name="potter" class="anchor" href="#potter"><span class="octicon octicon-link"></span></a>Potter</h1>
+
+<p>Conjunto de ferramentas que ajudam a criar sites WordPress mais facilmente.</p>
+
+<blockquote>
+<p>Potter ainda esta em fase beta</p>
+</blockquote>
+
+<h1>
+<a name="instala%C3%A7%C3%A3o" class="anchor" href="#instala%C3%A7%C3%A3o"><span class="octicon octicon-link"></span></a>Instalação</h1>
+
+<p>No seu <code>composer.json</code></p>
+
+<pre><code>    "require": {
+      "potterywp/potter": "1.*"
+   },
+</code></pre>
+
+<p>No seu <code>functions.php</code></p>
+
+<div class="highlight highlight-php"><pre>   <span class="k">require_once</span> <span class="s2">"vendor/autoload.php"</span><span class="p">;</span>
+</pre></div>
+
+<h1>
+<a name="caracter%C3%ADsticas" class="anchor" href="#caracter%C3%ADsticas"><span class="octicon octicon-link"></span></a>Características</h1>
+
+<ul>
+<li>
+<strong>Post/Type</strong> - Crie custom posts types com facilidade e flexibilidade</li>
+<li>
+<strong>ThemeOptions</strong> - Opções de tema ficam faceis de serem criados. Potter usa um wrapper para <a href="https://github.com/valendesigns/option-tree">option-tree</a>, melhorando ainda mais o fluxo de desenvolvimento.</li>
+<li>
+<strong>Features</strong> - Potter possui uma série de helpers que facilitão a inclusisão de recursos nos seus projetos com Wordpress, como a inclusão de css e javascript com facilidade em suas páginas.</li>
+</ul><h2>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h2>
+
+<p>Para usar o Features insira o seguinte código em seu <code>functions.php</code> logo após <code>require_once "vendor/autoload.php";</code>
+A vantagem de usar as funções do Features é o ganho em organização e otimização, já que em poucas linhas você tem vários recursos do WP que você teria que separar em vários arquivos para manter organizado. Potter se encarrega de carregar os comandos apenás quando eles são nescessários.</p>
+
+<div class="highlight highlight-php"><pre><span class="k">use</span> <span class="nx">Potter\Potter</span><span class="p">;</span>
+
+<span class="nv">$features</span> <span class="o">=</span> <span class="nx">Potter</span><span class="o">::</span><span class="na">features</span><span class="p">();</span>
+</pre></div>
+
+<h3>
+<a name="menu" class="anchor" href="#menu"><span class="octicon octicon-link"></span></a>Menu</h3>
+
+<p>Adcione menus ao seu tema</p>
+
+<div class="highlight highlight-php"><pre><span class="c1">// $features-&gt;addMenu($location, $description);</span>
+<span class="nv">$features</span><span class="o">-&gt;</span><span class="na">addMenu</span><span class="p">(</span><span class="s1">'main'</span><span class="p">,</span> <span class="s1">'Menu Principal'</span><span class="p">);</span>
+</pre></div>
+
+<h3>
+<a name="theme-support" class="anchor" href="#theme-support"><span class="octicon octicon-link"></span></a>Theme Support</h3>
+
+<div class="highlight highlight-php"><pre><span class="c1">// $features-&gt;addThemeSupport($feature, $arguments = array());</span>
+<span class="nv">$features</span><span class="o">-&gt;</span><span class="na">addThemeSupport</span><span class="p">(</span><span class="s1">'post-thumbnails'</span><span class="p">);</span>
+<span class="nv">$features</span><span class="o">-&gt;</span><span class="na">addThemeSupport</span><span class="p">(</span><span class="s1">'post-formats'</span><span class="p">);</span>
+</pre></div>
+
+<h3>
+<a name="post-type-support" class="anchor" href="#post-type-support"><span class="octicon octicon-link"></span></a>Post Type Support</h3>
+
+<div class="highlight highlight-php"><pre><span class="c1">// $features-&gt;addPostTypeSupport($post_type, $feature)</span>
+<span class="nv">$features</span><span class="o">-&gt;</span><span class="na">addPostTypeSupport</span><span class="p">(</span><span class="s1">'page'</span><span class="p">,</span> <span class="s1">'excerpt'</span><span class="p">);</span>
+</pre></div>
+
+<h3>
+<a name="image-size" class="anchor" href="#image-size"><span class="octicon octicon-link"></span></a>Image Size</h3>
+
+<div class="highlight highlight-php"><pre><span class="c1">// $features-&gt;addImageSize($name, $width = 0, $height = 0, $crop = false);</span>
+<span class="nv">$features</span><span class="o">-&gt;</span><span class="na">addImageSize</span><span class="p">(</span><span class="s1">'thumb-home'</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="nv">$features</span><span class="o">-&gt;</span><span class="na">addImageSize</span><span class="p">(</span><span class="s1">'thumb-page'</span><span class="p">,</span> <span class="mi">248</span><span class="p">,</span> <span class="mi">888</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+<span class="nv">$features</span><span class="o">-&gt;</span><span class="na">addImageSize</span><span class="p">(</span><span class="s1">'thumb-contact'</span><span class="p">,</span> <span class="mi">460</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+</pre></div>
+
+<h3>
+<a name="assets" class="anchor" href="#assets"><span class="octicon octicon-link"></span></a>Assets</h3>
+
+<p>Adcione e organize arquivos css e js com facilidade.</p>
+
+<h4>
+<a name="css" class="anchor" href="#css"><span class="octicon octicon-link"></span></a>CSS</h4>
+
+<div class="highlight highlight-php"><pre><span class="c1">// $features-&gt;addCss($handle, $src = false, $deps = array(), $ver = null, $media = 'all');</span>
+<span class="nv">$features</span><span class="o">-&gt;</span><span class="na">addCss</span><span class="p">(</span><span class="s1">'gfonts'</span><span class="p">,</span> <span class="s1">'http://fonts.googleapis.com/css?family=Rosario:400,700'</span><span class="p">);</span>
+<span class="nv">$features</span><span class="o">-&gt;</span><span class="na">addCss</span><span class="p">(</span><span class="s1">'main'</span><span class="p">,</span> <span class="s1">'assets/pub/css/main.css'</span><span class="p">);</span>
+</pre></div>
+
+<h3>
+<a name="js" class="anchor" href="#js"><span class="octicon octicon-link"></span></a>JS</h3>
+
+<div class="highlight highlight-php"><pre><span class="c1">// $features-&gt;addJs($handle, $src, $deps = array(), $ver = null, $in_footer = false);</span>
+<span class="c1">// $features-&gt;addJsToHead($handle, $src, $deps = array(), $ver = null);</span>
+<span class="c1">// $features-&gt;addJsToFooter($handle, $src, $deps = array(), $ver = null);</span>
+
+<span class="nv">$features</span><span class="o">-&gt;</span><span class="na">addJsToHead</span><span class="p">(</span><span class="s1">'modernizr'</span><span class="p">,</span> <span class="s1">'assets/pub/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js'</span><span class="p">);</span>
+<span class="nv">$features</span><span class="o">-&gt;</span><span class="na">addJsToFooter</span><span class="p">(</span><span class="s1">'app'</span><span class="p">,</span> <span class="s1">'assets/pub/js/app.js'</span><span class="p">);</span>
+</pre></div>
+
+<h4>
+<a name="jquery-cdn" class="anchor" href="#jquery-cdn"><span class="octicon octicon-link"></span></a>jQuery CDN</h4>
+
+<p>Defina qual a versão de jQuery você esta usando. Potter vai ajustar todas as configurações nescessárias automaticamente.</p>
+
+<div class="highlight highlight-php"><pre><span class="c1">// $features-&gt;setJqueryCDNSupport($version, $fallback = null, $migrate = null, $in_footer = false);</span>
+<span class="nv">$features</span><span class="o">-&gt;</span><span class="na">setJqueryCDNSupport</span><span class="p">(</span><span class="s1">'2.1.1'</span><span class="p">,</span> <span class="s1">'assets/pub/js/vendor/jquery-2.1.1.min.js'</span><span class="p">,</span> <span class="s1">'assets/pub/js/vendor/jquery-migrate-1.2.1.min.js'</span><span class="p">);</span>
+</pre></div>
+
+<blockquote>
+<p>Alem de definir a versão do jQuery que você quer, você pode definir o seu fallback (caso o cdn não carregue) e ainda definir o jQuery migrate.</p>
+</blockquote>
+
+<h2>
+<a name="google-analytcs" class="anchor" href="#google-analytcs"><span class="octicon octicon-link"></span></a>Google Analytcs</h2>
+
+<p>Adcione o código de rastreamento do Google Analytcs no tema com apenas uma linha de código.</p>
+
+<div class="highlight highlight-php"><pre><span class="c1">// $features-&gt;setGoogleAnalytcsID($id);</span>
+<span class="nv">$features</span><span class="o">-&gt;</span><span class="na">setGoogleAnalytcsID</span><span class="p">(</span><span class="s1">'A1-XXXXXX'</span><span class="p">);</span>
+</pre></div>
+
+<h2>
+<a name="login-logo" class="anchor" href="#login-logo"><span class="octicon octicon-link"></span></a>Login Logo</h2>
+
+<p>Mude a imagem de login do Wordpress (d+ não?)</p>
+
+<div class="highlight highlight-php"><pre><span class="c1">// $features-&gt;setLoginLogo($logo, $style = array());</span>
+<span class="nv">$features</span><span class="o">-&gt;</span><span class="na">setLoginLogo</span><span class="p">(</span><span class="s1">'assets/pub/imgs/login-logo.png'</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">'width'</span><span class="o">=&gt;</span><span class="s1">'150px'</span><span class="p">));</span>
+</pre></div>
+
+<h2>
+<a name="op%C3%A7%C3%B5es-do-tema" class="anchor" href="#op%C3%A7%C3%B5es-do-tema"><span class="octicon octicon-link"></span></a>Opções do tema</h2>
+
+<p>Trabalhar com sites feitos em WP é muito bom, porém há momentos que precisamos deixar determinados recursos mais flexiveis pelo ambiente do usuário final (o cliente), para isso usamos recursos como o Theme Options.<br>
+Há varias formas de se implementar Theme Options, umas mais faceis e/ou robustas que outras. O plugin <a href="https://github.com/valendesigns/option-tree">option-tree</a> é uma exelente opção para se usar, é facil e flexivel, porém não possui uma interface de desenvolvimento que agrade a todos.<br>
+Por isso o Potter possui um wrapper API que facilita muito o trabalho de desenvolvimento de Theme Options com o option-tree.</p>
+
+<h3>
+<a name="criando-seu-themeoptions" class="anchor" href="#criando-seu-themeoptions"><span class="octicon octicon-link"></span></a>Criando seu ThemeOptions</h3>
+
+<ul>
+<li>Crie uma pasta chamada <code>/app</code> dentro da raiz do seu tema <code>/wp-content/themes/meutema/</code>
+</li>
+<li>Dentro da pasta <code>app</code> crie um arquivo chamado <code>ThemeOptions.php</code>
+</li>
+<li>
+<p>Dentro de <code>ThemeOptions.php</code> coloque o seguinte código:</p>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+<span class="k">use</span> <span class="nx">Potter\Theme\Options</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">ThemeOptions</span> <span class="k">extends</span> <span class="nx">Options</span>
+<span class="p">{</span>
+  <span class="k">protected</span> <span class="nv">$page_title</span> <span class="o">=</span> <span class="s1">'Opções do Tema'</span><span class="p">;</span>
+  <span class="k">protected</span> <span class="nv">$menu_title</span> <span class="o">=</span> <span class="s1">'Opções do Tema'</span><span class="p">;</span>
+  <span class="k">protected</span> <span class="nv">$settings_id</span> <span class="o">=</span> <span class="s1">'my_theme_options_id'</span><span class="p">;</span>
+
+  <span class="k">public</span> <span class="k">function</span> <span class="nf">doRegister</span><span class="p">()</span>
+  <span class="p">{</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</li>
+</ul><blockquote>
+<p>No momento que o Potter inicializar suas configurações ele automaticamente cria uma instancia de <code>ThemeOptions</code> então você não precisa fazer mais nada alem de criar o arquivo e colocar suas configurações lá.</p>
+</blockquote>
+
+<h3>
+<a name="configura%C3%A7%C3%B5es-adcionais" class="anchor" href="#configura%C3%A7%C3%B5es-adcionais"><span class="octicon octicon-link"></span></a>Configurações adcionais</h3>
+
+<p>Você ainda tem mais opções disponiveis, que te permitiram custumizar melhor seu ThemeOptions</p>
+
+<div class="highlight highlight-php"><pre> <span class="k">class</span> <span class="nc">ThemeOptions</span> <span class="k">extends</span> <span class="nx">Options</span>
+ <span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$page_title</span> <span class="o">=</span> <span class="s1">'Theme Options'</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$menu_title</span> <span class="o">=</span> <span class="s1">'Theme Options'</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$settings_id</span> <span class="o">=</span> <span class="s1">'theme_options'</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$header_logo</span> <span class="o">=</span> <span class="k">null</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$header_version_text</span> <span class="o">=</span> <span class="k">null</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$header_logo_link</span> <span class="o">=</span> <span class="k">null</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$show_new_layout</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$show_docs</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$show_pages</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$options_capability</span> <span class="o">=</span> <span class="s1">'edit_theme_options'</span><span class="p">;</span>
+
+    <span class="k">protected</span> <span class="nv">$contextual_help</span>
+        <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">'content'</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(),</span>
+            <span class="s1">'sidebar'</span> <span class="o">=&gt;</span> <span class="s1">''</span>
+        <span class="p">);</span>
+
+</pre></div>
+
+<h3>
+<a name="adcionando-op%C3%A7%C3%B5es" class="anchor" href="#adcionando-op%C3%A7%C3%B5es"><span class="octicon octicon-link"></span></a>Adcionando opções</h3>
+
+<p>Todas os campos/opções são executados dentro de <code>doRegister()</code></p>
+
+<div class="highlight highlight-php"><pre> <span class="k">public</span> <span class="k">function</span> <span class="nf">doRegister</span><span class="p">()</span>
+ <span class="p">{</span>
+    <span class="c1">// Primeiro você cria a seção</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">addSection</span><span class="p">(</span><span class="s1">'general'</span><span class="p">,</span> <span class="s1">'Geral'</span><span class="p">)</span>
+        <span class="c1">// depois você adcionar as opções, que são automaticamente inseridas na devida seção</span>
+        <span class="o">-&gt;</span><span class="na">addUpload</span><span class="p">(</span><span class="s1">'logo'</span><span class="p">,</span> <span class="s1">'Logo'</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">addText</span><span class="p">(</span><span class="s1">'header_slogan'</span><span class="p">,</span> <span class="s1">'Header Slogan'</span><span class="p">);</span>
+
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">addSection</span><span class="p">(</span><span class="s1">'another_section'</span><span class="p">,</span> <span class="s1">'Another'</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">addTextArea</span><span class="p">(</span><span class="s1">'text_impact'</span><span class="p">,</span> <span class="s1">'Text impact'</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">addPageSelect</span><span class="p">(</span><span class="s1">'my_page_id'</span><span class="p">,</span> <span class="s1">'Select Page'</span><span class="p">);</span>
+
+
+    <span class="c1">// Você não é obrigado a encadear os metodos</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">addSection</span><span class="p">(</span><span class="s1">'more_section'</span><span class="p">,</span> <span class="s1">'GoT'</span><span class="p">);</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">addCustomPostTypeSelect</span><span class="p">(</span><span class="s1">'my_got_id'</span><span class="p">,</span><span class="s1">'Select GoT'</span><span class="p">,</span> <span class="s1">'Desc of select'</span><span class="p">,</span> <span class="s1">'got'</span><span class="p">);</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">addCategorySelect</span><span class="p">(</span><span class="s1">'my_cat_id'</span><span class="p">,</span><span class="s1">'Select GoT'</span><span class="p">,</span> <span class="s1">'Desc of select'</span><span class="p">,</span> <span class="s1">'got'</span><span class="p">);</span>
+    <span class="c1">// As as opções são anexadas automaticamente a última seção configurada.</span>
+
+ <span class="p">}</span>
+</pre></div>
+
+<h4>
+<a name="op%C3%A7%C3%B5es-dispon%C3%ADveis" class="anchor" href="#op%C3%A7%C3%B5es-dispon%C3%ADveis"><span class="octicon octicon-link"></span></a>Opções disponíveis</h4>
+
+<ul>
+<li>
+<strong>addText</strong><br><code>$this-&gt;addText($id, $label, $desc = null, $std = null, $section = null, array $extra = array())</code> <em>text</em>
+</li>
+<li>
+<strong>addTextarea</strong><br><code>addTextarea($id, $label, $desc = null, $std = null, $section = null, array $extra = array())</code> <em>textarea</em>
+</li>
+<li>
+<strong>addSelect</strong><br><code>$this-&gt;addSelect($id, $label, array $choices, $desc = null, $std = null, $section = null, array $extra = array())</code> <em>field of type select.</em>
+</li>
+<li>
+<strong>addCheckbox</strong><br><code>$this-&gt;addCheckbox($id, $label, array $choices, $desc = null, $std = null, $section = null, array $extra = array())</code> <em>field of type checkbox.</em>
+</li>
+<li>
+<strong>addRadio</strong><br><code>$this-&gt;addRadio($id, $label, array $choices, $desc = null, $std = null, $section = null, array $extra = array())</code> <em>field of type radio.</em>
+</li>
+<li>
+<strong>addWYSIWYG</strong><br><code>$this-&gt;addWYSIWYG($id, $label, $desc = null, $std = null, $section = null, array $extra = array())</code> <em>WYSIWYG</em>
+</li>
+<li>
+<strong>addUpload</strong><br><code>$this-&gt;addUpload($id, $label, $desc = null, $std = null, $section = null, array $extra = array())</code> <em>upload (image)</em>
+</li>
+<li>
+<strong>addCustomPostTypeSelect</strong><br><code>$this-&gt;addCustomPostTypeSelect($id, $label, $desc = null, $postType = 'post', $std = null, $section = null, array $extra = array())</code> <em>select type field with custom post type</em><br>
+</li>
+<li>
+<strong>addCustomPostTypeCheckbox</strong><br><code>$this-&gt;addCustomPostTypeCheckbox($id, $label, $desc = null, $postType = 'post', $std = null, $section = null, array $extra = array())</code> <em>checkbox type field with custom post type</em><br>
+</li>
+<li>
+<strong>addPageSelect</strong><br><code>$this-&gt;addPageSelect($id, $label, $desc = null, $std = null, $section = null, array $extra = array())</code> <em>select type field with post type page</em>
+</li>
+<li>
+<strong>addPageCheckbox</strong><br><code>$this-&gt;addPageCheckbox($id, $label, $desc = null, $std = null, $section = null, array $extra = array())</code> <em>checkbox type field with post type page</em>
+</li>
+<li>
+<strong>addPostCheckbox</strong><br><code>$this-&gt;addPageCheckbox($id, $label, $desc = null, $std = null, $section = null, array $extra = array())</code> <em>checkbox type field with post type post</em>
+</li>
+<li>
+<strong>addPostSelect</strong><br><code>$this-&gt;addPostSelect($id, $label, $desc = null, $std = null, $section = null, array $extra = array())</code> <em>select type field with post type post</em>
+</li>
+<li>
+<strong>addTaxonomySelect</strong><br><code>$this-&gt;addTaxonomySelect($id, $label, $desc = null, $taxonomy = 'category', $std = null, $section = null, array $extra = array())</code> <em>select type field with taxonomy</em>
+</li>
+<li>
+<strong>addTaxonomyCheckbox</strong><br><code>$this-&gt;addTaxonomyCheckbox($id, $label, $desc = null, $taxonomy = 'category', $std = null, $section = null, array $extra = array())</code> <em>checkbox type field with taxonomy</em>
+</li>
+<li>
+<strong>addCategorySelect</strong><br><code>$this-&gt;addCategorySelect($id, $label, $desc = null, $std = null, $section = null, array $extra = array())</code> <em>select type field with categories</em>
+</li>
+<li>
+<strong>addCategoryCheckbox</strong><br><code>$this-&gt;addCategoryCheckbox($id, $label, $desc = null, $std = null, $section = null, array $extra = array())</code> <em>checkbox type field with categories</em>
+</li>
+<li>
+<strong>addTagSelect</strong><br><code>$this-&gt;addTagSelect($id, $label, $desc = null, $std = null, $section = null, array $extra = array())</code> <em>select type field with tags</em>
+</li>
+<li>
+<strong>addTagCheckbox</strong><br><code>$this-&gt;addTagCheckbox($id, $label, $desc = null, $std = null, $section = null, array $extra = array())</code> <em>checkbox type field with tags</em>
+</li>
+<li>
+<strong>addTypography</strong><br><code>$this-&gt;addTypography($id, $label, $desc = null, $std = null, $section = null, array $extra = array())</code>
+</li>
+<li>
+<strong>addOnOff</strong><br><code>$this-&gt;addOnOff($id, $label, $desc = null, $std = null, $section = null, array $extra = array())</code>
+</li>
+<li>
+<strong>addOption</strong><br><code>$this-&gt;addOption(array $args)</code> Raw data for option.</li>
+</ul><h3>
+<a name="recuperando-op%C3%A7%C3%B5es" class="anchor" href="#recuperando-op%C3%A7%C3%B5es"><span class="octicon octicon-link"></span></a>Recuperando opções</h3>
+
+<p>Recuperar os dados salvos no ThemeOptions é muito fácil.</p>
+
+<div class="highlight highlight-php"><pre>
+<span class="nv">$option_name</span> <span class="o">=</span> <span class="nx">OPT</span><span class="o">::</span><span class="na">get</span><span class="p">(</span><span class="s1">'option_name'</span><span class="p">,</span> <span class="s1">'default_value'</span><span class="p">);</span>
+
+<span class="nx">OPT</span><span class="o">::</span><span class="na">_get</span><span class="p">(</span><span class="s1">'option_name'</span><span class="p">,</span> <span class="s1">'default_value'</span><span class="p">);</span> <span class="c1">// echo OPT::get('option_name', 'default_value');</span>
+
+<span class="nv">$option</span> <span class="o">=</span> <span class="nx">OPT</span><span class="o">::</span><span class="na">get_nl2br</span><span class="p">(</span><span class="s1">'option_name'</span><span class="p">,</span> <span class="s1">'default_value'</span><span class="p">);</span> <span class="c1">// $option =  nl2br(OPT::get('option_name', 'default_value'));</span>
+
+<span class="nx">OPT</span><span class="o">::</span><span class="na">_get_nl2br</span><span class="p">(</span><span class="s1">'option_name'</span><span class="p">,</span> <span class="s1">'default_value'</span><span class="p">)</span> <span class="c1">// echo nl2br(OPT::get('option_name', 'default_value'));</span>
+
+</pre></div>
+
+<h2>
+<a name="post-types--models" class="anchor" href="#post-types--models"><span class="octicon octicon-link"></span></a>Post Types / Models</h2>
+
+<p>Não são raros os momentos onde precisamos criar custom post para atender as exigencias dos projetos.<br>
+Potter possui uma API que tem como objetivo facilitar esse trabalho, que as vezes tende a ser chato e complicado. </p>
+
+<p>A API do Potter foi feita sobre o <a href="https://github.com/mboynes/super-cpt">Super-CTP</a></p>
+
+<h3>
+<a name="criando-um-posttype" class="anchor" href="#criando-um-posttype"><span class="octicon octicon-link"></span></a>Criando um PostType</h3>
+
+<p>Crie uma pasta chamada <code>/app/models</code> dentro da raiz do seu tema <code>/wp-content/themes/meutema/</code><br>
+Dentro da pasta <code>/app/models</code> você vai criar um arquivo/classe para cada post type que deseja criar, a classe deve possuir o mesmo nome que o arquivo.</p>
+
+<blockquote>
+<p>Por conversão use <em>CamelCase</em> para criar as classes, e para melhor identifica-lás acressente <em>Type</em> ou <em>Model</em> ao final do nome.<br>
+Ex: <code>SliderModel.php</code> ou <code>SliderType.php</code><br>
+O Potter automaticamente criará o post type 'slider'</p>
+</blockquote>
+
+<p><code>SliderType.php</code></p>
+
+<p>O conteúdo do arquivo deve ficar assim:</p>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">Potter\Post\Type</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">SliderType</span> <span class="k">extends</span> <span class="nx">Type</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$supports</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span> <span class="s1">'thumbnail'</span><span class="p">);</span>
+    <span class="k">protected</span> <span class="nv">$public</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$show_ui</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="k">public</span> <span class="nv">$icon</span> <span class="o">=</span> <span class="s1">'picture-o'</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="configura%C3%A7%C3%B5es-disponiveis" class="anchor" href="#configura%C3%A7%C3%B5es-disponiveis"><span class="octicon octicon-link"></span></a>Configurações disponiveis</h3>
+
+<p>Há ainda várias configurações disponiveis.</p>
+
+<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">Potter\Post\Type</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">SliderType</span> <span class="k">extends</span> <span class="nx">Type</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nv">$type</span> <span class="o">=</span> <span class="s1">'carrocel'</span><span class="p">;</span> <span class="c1">// força o post type da classe</span>
+    <span class="k">protected</span> <span class="nv">$taxonomies</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+    <span class="k">protected</span> <span class="nv">$labels</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+    <span class="k">protected</span> <span class="nv">$capabilities</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+    <span class="k">protected</span> <span class="nv">$args</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+    <span class="k">protected</span> <span class="nv">$supports</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+    <span class="k">public</span> <span class="nv">$icon</span> <span class="o">=</span> <span class="s1">'dashicons-admin-post'</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$capability_type</span> <span class="o">=</span> <span class="s1">'page'</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$public</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$show_ui</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$description</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$route</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$queryArgs</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+
+    <span class="k">protected</span> <span class="nv">$meta_boxes</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Você pode extender qualquer atributo ou método da classe <a href="https://github.com/mboynes/super-cpt/blob/master/includes/class-super-custom-post-type.php"><code>Super_Custom_Post_Type.php</code></a></p>
+
+<h3>
+<a name="meta-boxes" class="anchor" href="#meta-boxes"><span class="octicon octicon-link"></span></a>Meta-Boxes</h3>
+
+<p>O próprio Super-CTP possui um sistema de meta-boxes, porem ele é um pouco limitado. Potter usa o plugin  <a href="https://github.com/rilwis/meta-box">meta-box</a> que proporciona muito mais flixebilidade e opções.</p>
+
+<p>Para cadastrar uma meta-box a um post-type acressente as opções desejadas ao atributo <code>$meta_boxex</code>  </p>
+
+<div class="highlight highlight-php"><pre><span class="k">protected</span> <span class="nv">$meta_boxes</span>
+        <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">'metabox-id'</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                <span class="s1">'title'</span> <span class="o">=&gt;</span> <span class="s1">'Dados do slider'</span><span class="p">,</span>
+                <span class="s1">'fields'</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                    <span class="k">array</span><span class="p">(</span>
+                        <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'link'</span><span class="p">,</span>
+                        <span class="s1">'id'</span> <span class="o">=&gt;</span> <span class="s1">'link'</span><span class="p">,</span>
+                        <span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'text'</span><span class="p">,</span>
+                        <span class="s1">'clone'</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="k">array</span><span class="p">(</span>
+                        <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'Target'</span><span class="p">,</span>
+                        <span class="s1">'id'</span> <span class="o">=&gt;</span> <span class="s1">'target'</span><span class="p">,</span>
+                        <span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'select'</span><span class="p">,</span>
+                        <span class="s1">'options'</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                            <span class="s1">'_new'</span><span class="p">,</span>
+                            <span class="s1">'_self'</span><span class="p">,</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">);</span>
+</pre></div>
+
+<p>Todas as configurações do <a href="https://github.com/rilwis/meta-box">meta-box</a> estão disponiveis</p>
+
+<h3>
+<a name="post-type-query" class="anchor" href="#post-type-query"><span class="octicon octicon-link"></span></a>Post Type Query</h3>
+
+<p>O uso do WP_Query por muitas vezes é complicado, e não fornece uma API muito bonita de de trabalhar. Com o Potter fica muito fácil executar consultas.</p>
+
+<h3>
+<a name="instanciando-a-query" class="anchor" href="#instanciando-a-query"><span class="octicon octicon-link"></span></a>Instanciando a Query</h3>
+
+<p>No local onde deseja executar a sua consulta, você pode usar o seguinte comando.</p>
+
+<div class="highlight highlight-php"><pre><span class="c1">// Retorna um objeto WP_Query</span>
+<span class="nv">$sliders</span> <span class="o">=</span> <span class="nx">\Potter\Potter</span><span class="o">::</span><span class="na">model</span><span class="p">(</span><span class="s1">'slider'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">all</span><span class="p">();</span> <span class="c1">// passe como parametro o nome do model/post type que você criou</span>
+
+<span class="c1">// Nada muda no seu código</span>
+<span class="k">if</span><span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">have_posts</span><span class="p">())</span><span class="o">:</span>
+    <span class="k">while</span><span class="p">(</span><span class="nv">$query</span><span class="o">-&gt;</span><span class="na">have_posts</span><span class="p">())</span><span class="o">:</span> <span class="nv">$query</span><span class="o">-&gt;</span><span class="na">the_post</span><span class="p">()</span>
+        <span class="c1">/// </span>
+    <span class="k">endwhile</span><span class="p">;</span>
+<span class="k">endif</span><span class="p">;</span>
+
+</pre></div>
+
+<p>Há varios métodos disponíveis.</p>
+
+<div class="highlight highlight-php"><pre><span class="c1">// Retorna um objeto Potter/Post/ModelQuery</span>
+<span class="nv">$slidersQuery</span> <span class="o">=</span> <span class="nx">\Potter\Potter</span><span class="o">::</span><span class="na">model</span><span class="p">(</span><span class="s1">'slider'</span><span class="p">);</span> <span class="c1">// passe como parametro o nome do model/post type que você criou</span>
+
+<span class="c1">// Retorna um objeto WP_Query</span>
+<span class="nv">$slidersQuery</span><span class="o">-&gt;</span><span class="na">perPage</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">order</span><span class="p">(</span><span class="s1">'author'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">exclude</span><span class="p">(</span><span class="mi">99</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">exe</span><span class="p">();</span>
+
+<span class="c1">// Retorna um objeto WP_Query</span>
+<span class="nv">$slidersQuery</span><span class="o">-&gt;</span><span class="na">perPage</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">exe</span><span class="p">();</span>
+<span class="nv">$slidersQuery</span><span class="o">-&gt;</span><span class="na">exe</span><span class="p">(</span><span class="nv">$args</span> <span class="o">=</span> <span class="k">array</span><span class="p">());</span> <span class="c1">// Passe parametros extras diretamente para o WP_Query</span>
+<span class="nv">$slidersQuery</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nv">$args</span> <span class="o">=</span> <span class="k">array</span><span class="p">())</span> <span class="c1">// Uma quantidade limitada de resultados</span>
+
+<span class="c1">// Retorna um objeto WP_Query</span>
+<span class="nv">$slidersQuery</span><span class="o">-&gt;</span><span class="na">perPage</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">byParent</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span> <span class="c1">// Páginas filhas do ID 9</span>
+<span class="nv">$slidersQuery</span><span class="o">-&gt;</span><span class="na">perPage</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">exclude</span><span class="p">(</span><span class="nx">get_the_ID</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">byParent</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span> <span class="c1">// Páginas filhas do ID 9, menos a página atual</span>
+</pre></div>
+        </section>
+
+        <footer>
+          Potter is maintained by <a href="https://github.com/potterywp">potterywp</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
