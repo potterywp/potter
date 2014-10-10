@@ -1,8 +1,17 @@
 <?php
 namespace Potter\Utils;
 
+use Illuminate\Support\Collection;
+use Potter\Utils\Form\Field;
+use Potter\Utils\Form\Widget as Form;
+
 abstract class Widget extends \WP_Widget
 {
+    /**
+     * @var array
+     */
+    protected $fields = array();
+
     public function __construct()
     {
         // ID Base
@@ -25,6 +34,13 @@ abstract class Widget extends \WP_Widget
         if (empty($this->control_options)):
             $this->control_options = array('id_base' => $this->id_base);
         endif;
+    }
+
+    public function form($instanse)
+    {
+        $form = new Form($this, $this->fields, $instanse);
+
+        echo $form->render();
     }
 }
 
