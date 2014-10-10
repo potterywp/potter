@@ -13,6 +13,10 @@ class PotterCore
      */
     protected $autoloadFolders = array('app/models');
     /**
+     * @var string
+     */
+    protected $widgetsFolder = 'app/widgets';
+    /**
      * @var array
      */
     protected $autolaodFiles = array();
@@ -28,6 +32,10 @@ class PotterCore
      * @var \Illuminate\Support\Collection
      */
     protected $models;
+    /**
+     * @var \Illuminate\Support\Collection
+     */
+    protected $widgets;
 
     /**
      * @var \Potter\Theme\Options
@@ -44,6 +52,7 @@ class PotterCore
         Super_CPT_Loader::load($SCPT_PLUGIN_URL, $SCPT_PLUGIN_DIR);
 
         $this->models = new Collection();
+        $this->widgets = new Collection();
     }
 
     /**
@@ -69,6 +78,7 @@ class PotterCore
             endforeach;
         endforeach;
 
+        $this->loadWidgets();
         $this->loadThemeOptions();
     }
 
@@ -101,6 +111,30 @@ class PotterCore
         return true;
     }
 
+    /**
+     * Load and register widgets
+     */
+    protected function loadWidgets()
+    {
+        $widgets_folder = apply_filters('potter_widgets_folder', $this->widgetsFolder);
+
+        $pattern = $this->themeDIR . $widgets_folder . "/*.php";
+
+        foreach (glob($pattern) as $file): // Load File
+            require_once($file);
+
+            $widget = basename($file, '.php');
+
+            // Register
+            if (class_exists($widget)):
+                $this->widgets->push($widget);
+            endif;
+        endforeach;
+    }
+
+    /**
+     * Load end register theme options
+     */
     private function loadThemeOptions()
     {
         $file = cleanURI($this->themeDIR . 'app/ThemeOptions.php');
@@ -129,11 +163,25 @@ class PotterCore
         return $this->models;
     }
 
+    /**
+     * @return Collection
+     */
+    public function getWidgets()
+    {
+        return $this->widgets;
+    }
+
+    /**
+     * @return Theme\Options
+     */
     public function getOptionsInstance()
     {
         return $this->optionsInstance;
     }
 
+    /**
+     * @param Post\Type $postType
+     */
     private function registerModel(Post\Type $postType)
     {
         $type = $postType->getPostType();

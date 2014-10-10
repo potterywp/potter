@@ -3,28 +3,29 @@ namespace Potter\Theme;
 
 class Features
 {
-    protected $imagesSize = array();
-    protected $menus = array();
+    protected $imagesSize   = array();
+    protected $menus        = array();
     protected $themeSupport = array();
-    protected $postSupport = array();
-    protected $sidebars = array();
-    protected $css = array();
-    protected $js = array();
-    protected $jsEnqueue = array();
+    protected $postSupport  = array();
+    protected $sidebars     = array();
+    protected $widgets      = array();
+    protected $css          = array();
+    protected $js           = array();
+    protected $jsEnqueue    = array();
     protected $jQueryCDN
-        = array(
+                            = array(
             'cdn_url'   => null,
             'fallback'  => null,
             'migrate'   => null,
             'in_footer' => false,
         );
     protected $customLoginLogo
-        = array(
+                            = array(
             'logo_url' => null,
             'style'    => array()
         );
 
-    public static $jQueryCDN_URL = '//ajax.googleapis.com/ajax/libs/jquery/%1s/jquery.min.js';
+    public static $jQueryCDN_URL       = '//ajax.googleapis.com/ajax/libs/jquery/%1s/jquery.min.js';
     public static $GOOGLE_ANALYTICS_ID = false;
     public static $add_jquery_fallback = false;
 
@@ -112,6 +113,22 @@ class Features
     public function addSidebar(array $sidebar)
     {
         $this->sidebars[] = $sidebar;
+
+        return $this;
+    }
+
+    /**
+     * @param string|array $widget
+     *
+     * @return $this
+     */
+    public function addWidget($widget)
+    {
+        if (is_array($widget)):
+            $this->widgets = array_merge($this->widgets, $widget);
+        else:
+            $this->widgets[] = $widget;
+        endif;
 
         return $this;
     }
@@ -303,6 +320,10 @@ EOT;
 
     public function _widgets_init()
     {
+        foreach ($this->widgets as $widget):
+            register_widget($widget);
+        endforeach;
+
         foreach ($this->sidebars as $sidebar):
             register_sidebar($sidebar);
         endforeach;

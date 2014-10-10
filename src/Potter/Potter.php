@@ -21,8 +21,16 @@ class Potter
      */
     public function __construct(PotterCore $potterCore, Features $features)
     {
-        self::$potter   = $potterCore;
+        self::$potter = $potterCore;
         self::$features = $features;
+
+        $this->registerWidgets();
+    }
+
+    private function registerWidgets()
+    {
+        $widgets = self::core()->getWidgets()->toArray();
+        self::features()->addWidget($widgets);
     }
 
     /**
