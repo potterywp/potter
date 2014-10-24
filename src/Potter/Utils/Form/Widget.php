@@ -45,6 +45,12 @@ class Widget
         return $this;
     }
 
+    /**
+     * @param $id
+     * @param $options
+     *
+     * @return $this
+     */
     public function addField($id, $options)
     {
         $field = $this->makeField($id, $options);
@@ -103,6 +109,9 @@ class Widget
         return implode("\n", $html);
     }
 
+    /**
+     * @return string
+     */
     public function  __toString()
     {
         return $this->render();
