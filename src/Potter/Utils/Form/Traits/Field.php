@@ -1,9 +1,8 @@
-<?php namespace Potter\Utils\Form;
+<?php namespace Potter\Utils\Form\Traits;
 
-use HtmlObject\Input;
 use HtmlObject\Element;
 
-class Field extends Input
+trait Field
 {
     public $label;
 

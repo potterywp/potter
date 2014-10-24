@@ -1,8 +1,6 @@
 <?php
 namespace Potter\Utils;
 
-use Illuminate\Support\Collection;
-use Potter\Utils\Form\Field;
 use Potter\Utils\Form\Widget as Form;
 
 abstract class Widget extends \WP_Widget
@@ -36,11 +34,25 @@ abstract class Widget extends \WP_Widget
         endif;
     }
 
+    /**
+     * @param array $instanse
+     *
+     * @return string|void
+     */
     public function form($instanse)
     {
-        $form = new Form($this, $this->fields, $instanse);
+        $form = $this->makeForm($instanse);
 
         echo $form->render();
     }
-}
 
+    /**
+     * @param array $instanse
+     *
+     * @return Form
+     */
+    protected function makeForm(array $instanse = array())
+    {
+        return new Form($this, $this->fields, $instanse);
+    }
+}

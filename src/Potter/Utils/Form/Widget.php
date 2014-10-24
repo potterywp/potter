@@ -1,10 +1,11 @@
 <?php namespace Potter\Utils\Form;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Arr;
 
 class Widget
 {
+    protected static $fieldsInput    = ['url', 'password', 'text', 'tel', 'number', 'date'];
+    protected static $fieldsTextarea = ['textarea'];
     /**
      * @var Collection
      */
@@ -56,7 +57,7 @@ class Widget
      * @param $id
      * @param $options
      *
-     * @return Field
+     * @return \HtmlObject\Traits\Tag
      */
     protected function makeField($id, $options)
     {
@@ -72,13 +73,21 @@ class Widget
         );
 
         $options['name'] = $this->widget->get_field_name($options['name']);
-        $options['id'] = $this->widget->get_field_name($options['id']);
+        $options['id']   = $this->widget->get_field_id($options['id']);
+
+        $type = $options['type'];
 
         $value = $this->values->get($id, $options['value']);
 
-        $filed = new Field($options['type'], $options['name'], $value, $options);
+        if (in_array($type, self::$fieldsInput)):
+            $field = new Fields\Input($type, $options['name'], $value, $options);
+        elseif (in_array($type, self::$fieldsTextarea)):
+            $field = new Fields\Textarea($type, $options['name'], $value, $options);
+        else:
+            $field = new Fields\Input($type, $options['name'], $value, $options);
+        endif;
 
-        return $filed;
+        return $field;
     }
 
     /**
