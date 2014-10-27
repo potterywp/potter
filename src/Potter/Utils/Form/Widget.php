@@ -6,6 +6,7 @@ class Widget
 {
     protected static $fieldsInput    = ['url', 'password', 'text', 'tel', 'number', 'date'];
     protected static $fieldsTextarea = ['textarea'];
+    protected static $fieldsSelect   = ['select'];
     /**
      * @var Collection
      */
@@ -89,6 +90,8 @@ class Widget
             $field = new Fields\Input($type, $options['name'], $value, $options);
         elseif (in_array($type, self::$fieldsTextarea)):
             $field = new Fields\Textarea($type, $options['name'], $value, $options);
+        elseif (in_array($type, self::$fieldsSelect)):
+            $field = new Fields\Select($type, $options['name'], $value, $options);
         else:
             $field = new Fields\Input($type, $options['name'], $value, $options);
         endif;
