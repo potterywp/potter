@@ -4,7 +4,20 @@ use HtmlObject\Element;
 
 trait Field
 {
-    public $label;
+    /**
+     * @var string
+     */
+    protected $label;
+
+    /**
+     * @var string
+     */
+    protected $container = 'p';
+
+    /**
+     * @var bool
+     */
+    public $inputCheckable = false;
 
     /**
      * @param array $attributes
@@ -26,18 +39,54 @@ trait Field
     }
 
     /**
+     * @param $value
+     *
+     * @return $this
+     */
+    public function setLabel($value)
+    {
+        $this->label = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param $value
+     *
+     * @return $this
+     */
+    public function setContainer($value)
+    {
+        $this->container = $value;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function render()
     {
         $label = Element::label($this->label)->for($this->id);
 
-        $p = Element::p()->nest(
-            [
-                'label' => $label,
-                'field' => parent::render()
-            ]
-        );
+        if ($this->inputCheckable):
+            $p = Element::create($this->container)->nest(
+                [
+                    'field' => parent::render(),
+                    'label' => $label,
+                    'close' => '<br>'
+                ]
+            );
+
+        else:
+            $p = Element::create($this->container)->nest(
+                [
+                    'label' => $label,
+                    'field' => parent::render()
+                ]
+            );
+
+        endif;
 
         return $p->render();
     }

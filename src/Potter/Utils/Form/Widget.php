@@ -7,10 +7,14 @@ class Widget
     protected static $fieldsInput    = ['url', 'password', 'text', 'tel', 'number', 'date'];
     protected static $fieldsTextarea = ['textarea'];
     protected static $fieldsSelect   = ['select', 'multi-select'];
+    protected static $fieldsCheckbox = ['checkbox'];
+    protected static $fieldsRadio    = ['radio'];
+
     /**
      * @var Collection
      */
     protected $fields;
+
     /**
      * @var \Potter\Utils\Widget
      */
@@ -92,6 +96,10 @@ class Widget
             $field = new Fields\Textarea($type, $options['name'], $value, $options);
         elseif (in_array($type, self::$fieldsSelect)):
             $field = new Fields\Select($type, $options['name'], $value, $options);
+        elseif (in_array($type, self::$fieldsCheckbox)):
+            $field = new Fields\Checkable($type, $options['name'], $value, $options);
+        elseif (in_array($type, self::$fieldsRadio)):
+            $field = new Fields\Radio($type, $options['name'], $value, $options);
         else:
             $field = new Fields\Input($type, $options['name'], $value, $options);
         endif;
