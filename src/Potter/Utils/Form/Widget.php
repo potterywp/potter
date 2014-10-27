@@ -6,7 +6,7 @@ class Widget
 {
     protected static $fieldsInput    = ['url', 'password', 'text', 'tel', 'number', 'date'];
     protected static $fieldsTextarea = ['textarea'];
-    protected static $fieldsSelect   = ['select'];
+    protected static $fieldsSelect   = ['select', 'multi-select'];
     /**
      * @var Collection
      */

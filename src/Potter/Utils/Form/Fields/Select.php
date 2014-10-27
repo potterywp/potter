@@ -28,17 +28,21 @@ class Select extends Tag
         $this->selected = $selected;
         $this->choices  = new Collection();
 
-        if ($type != 'select') $attributes['type'] = $type;
-
         if (isset($attributes['choices'])):
             $this->parseChoices($attributes['choices']);
 
             unset($attributes['choices']);
         endif;
 
-        if (isset($attributes['value'])) unset($attributes['value']);
+        if ($type == 'multi-select'):
+            $attributes['multiple'] = true;
+
+            $name .= '[]';
+        endif;
 
         $attributes['name'] = $name;
+
+        array_forget($attributes, ['value', 'type']);
 
         $this->setTag('select', null, $attributes);
     }
