@@ -11,7 +11,7 @@ class PotterCore
     /**
      * @var array
      */
-    protected $autoloadFolders = array('app/models');
+    protected $autoloadFolders = array('app/models', 'app/taxonomies');
     /**
      * @var string
      */
