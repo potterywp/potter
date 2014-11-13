@@ -15,7 +15,6 @@
         "rilwis/meta-box": "dev-master",
         "illuminate/support": "~5",
         "valendesigns/option-tree": "~2.4",
-        "potterywp/super-cpt": "dev-master",
         "anahkiasen/html-object": "~1.4"
     },
     "minimum-stability": "dev",
