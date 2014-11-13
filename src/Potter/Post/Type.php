@@ -4,11 +4,21 @@ namespace Potter\Post;
 
 use Illuminate\Support\Str;
 use Potter\Utils\Metabox;
-use Super_Custom_Post_Type;
 
-abstract class Type extends Super_Custom_Post_Type
+abstract class Type
 {
-
+    /**
+     * @var string
+     */
+    protected $type;
+    /**
+     * @var array
+     */
+    protected $args = array();
+    /**
+     * @var bool
+     */
+    protected $autoRegister = true;
     /**
      * @var array
      */
@@ -18,21 +28,26 @@ abstract class Type extends Super_Custom_Post_Type
      */
     protected $labels = array();
     /**
+     * @var string
+     */
+    protected $singular;
+    /**
+     * @var string
+     */
+    protected $plural;
+    /**
      * @var array
      */
     protected $capabilities = array();
     /**
      * @var array
      */
-    protected $args = array();
+    protected $supports = array('title', 'editor', 'thumbnail', 'revisions', 'excerpt', 'page-attributes');
     /**
-     * @var array
-     */
-    protected $supports = array();
-    /**
+     * @see https://developer.wordpress.org/resource/dashicons/
      * @var string
      */
-    public $icon = 'dashicons-admin-post';
+    protected $icon = 'dashicons-admin-post';
     /**
      * @var string
      */
@@ -40,11 +55,19 @@ abstract class Type extends Super_Custom_Post_Type
     /**
      * @var boolean
      */
-    protected $public;
+    protected $public = true;
     /**
      * @var boolean
      */
-    protected $show_ui;
+    protected $show_ui = true;
+    /**
+     * @var bool
+     */
+    protected $has_archive = true;
+    /**
+     * @var int
+     */
+    protected $menu_position = 5;
     /**
      * @var string
      */
@@ -57,20 +80,52 @@ abstract class Type extends Super_Custom_Post_Type
      * @var array
      */
     protected $queryArgs = array();
-
+    /**
+     * @var bool
+     */
+    protected $hierarchical = false;
+    /**
+     * @var array
+     */
     protected $meta_boxes = array();
 
     public function __construct()
     {
-        $type     = $this->getPostType();
-        $singular = $this->singular;
-        $plural   = $this->plural;
+        $this->setSingular();
+        $this->setPlural();
 
         if (!empty($this->meta_boxes)) $this->parseMetaboxes();
 
-        parent::__construct($type, $singular, $plural);
+        if ($this->autoRegister) add_action('init', array($this, '_register'));
     }
 
+    /**
+     * @param string $singular
+     *
+     * @return $this
+     */
+    public function setSingular($singular = null)
+    {
+        if (!empty($singular)) $this->singular = $singular;
+
+        if (empty($this->singular)) $this->singular = Str::title($this->getPostType());
+
+        return $this;
+    }
+
+    /**
+     * @param string $plural
+     *
+     * @return $this
+     */
+    public function setPlural($plural = null)
+    {
+        if (!empty($plural)) $this->plural = $plural;
+
+        if (empty($this->plural)) $this->plural = Str::plural($this->singular);
+
+        return $this;
+    }
 
     /**
      * @return string
@@ -102,32 +157,41 @@ abstract class Type extends Super_Custom_Post_Type
 
         foreach ($this->meta_boxes as $key => $mbox):
             $default['id'] = $key;
-            $attributes = wp_parse_args($mbox, $default);
+            $attributes    = wp_parse_args($mbox, $default);
 
             new Metabox($attributes);
 
         endforeach;
     }
 
-    public function register_post_type($customizations = array())
+    /**
+     * @param array $customArgs
+     *
+     * @return array
+     */
+    protected function getArgs($customArgs = [])
     {
-        if (is_bool($this->public)) $customizations['public'] = $this->public;
-        if (is_bool($this->show_ui)) $customizations['show_ui'] = $this->show_ui;
-        if (!empty($this->supports)) $customizations['supports'] = $this->supports;
-        if (!empty($this->taxonomies)) $customizations['taxonomies'] = $this->taxonomies;
-        if (!empty($this->capabilities)) $customizations['capabilities'] = $this->capabilities;
-        if (!empty($this->capability_type)) $customizations['capability_type'] = $this->capability_type;
-        if (!empty($this->description)) $customizations['description'] = $this->description;
+        $args = [
+            'label'         => $this->plural,
+            'description'   => $this->description,
+            'labels'        => $this->getLabels(),
+            'supports'      => $this->supports,
+            'taxonomies'    => $this->taxonomies,
+            'hierarchical'  => $this->hierarchical,
+            'public'        => $this->public,
+            'show_ui'       => $this->show_ui,
+            'menu_position' => $this->menu_position,
+            'has_archive'   => $this->has_archive,
+            'menu_icon'     => $this->icon ? $this->icon : false,
+        ];
+
         if (!empty($this->route)):
-            $customizations['rewrite'] = array('slug' => $this->route, 'with_front' => true);
+            $args['rewrite'] = array('slug' => $this->route, 'with_front' => true);
         endif;
-        $customizations['labels'] = $this->getLabels();
 
-        $customizations = wp_parse_args($this->args, $customizations);
+        $args = wp_parse_args($args, $customArgs);
 
-        if (!empty($this->icon)) $this->set_icon($this->icon);
-
-        parent::register_post_type($customizations);
+        return wp_parse_args($this->args, $args);
     }
 
     /**
@@ -161,5 +225,25 @@ abstract class Type extends Super_Custom_Post_Type
     public function getQueryArgs()
     {
         return $this->queryArgs;
+    }
+
+    /**
+     * Extra commands to be executed before registration.
+     */
+    protected function beforeRegister()
+    {
+        // Do what you want.
+    }
+
+    /**
+     * Register
+     */
+    public function _register()
+    {
+        $this->beforeRegister();
+
+        $args = $this->getArgs();
+
+        register_post_type($this->type, $args);
     }
 }
