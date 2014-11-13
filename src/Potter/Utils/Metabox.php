@@ -30,11 +30,11 @@ class Metabox extends Collection
         endif;
 
         $default = array(
-           'title'    => __('Data'),
-           'pages'    => array('page'),
-           'context'  => 'normal',
-           'priority' => 'high',
-           'autosave' => false,
+            'title'    => __('Data'),
+            'pages'    => array('page'),
+            'context'  => 'normal',
+            'priority' => 'high',
+            'autosave' => false,
         );
 
         $this->attributes = wp_parse_args($attributes, $default);
@@ -138,10 +138,82 @@ class Metabox extends Collection
     }
 
     /**
-     * @return RW_Meta_Box
+     * @see https://github.com/rilwis/meta-box/blob/master/demo/better-include.php#L60
+     * @return bool
+     */
+    protected function canRegister()
+    {
+        // Include in back-end only
+        if (!defined('WP_ADMIN') || !WP_ADMIN) return false;
+        // Always include for ajax
+        if (defined('DOING_AJAX') && DOING_AJAX) return true;
+
+        $conditions = $this->get('conditions', []);
+
+        if (empty($conditions)) return true;
+
+        if (isset($_GET['post'])):
+            $post_id = intval($_GET['post']);
+        elseif (isset($_POST['post_ID'])):
+            $post_id = intval($_POST['post_ID']);
+        else:
+            $post_id = false;
+        endif;
+
+        $post_id = (int)$post_id;
+
+        $post = get_post($post_id);
+
+        foreach ($conditions as $cond => $v):
+
+            if (!is_array($v)) $v = array($v); // Catch non-arrays too
+
+            switch ($cond):
+                case 'id':
+                    if (in_array($post_id, $v)) return true;
+
+                    break;
+                case 'parent':
+                    $post_parent = $post->post_parent;
+                    if (in_array($post_parent, $v)) return true;
+
+                    break;
+                case 'slug':
+                    $post_slug = $post->post_name;
+                    if (in_array($post_slug, $v)) return true;
+
+                    break;
+                case 'category': //post must be saved or published first
+                    $categories = get_the_category($post->ID);
+                    $catslugs   = array();
+
+                    foreach ($categories as $category):
+                        array_push($catslugs, $category->slug);
+                    endforeach;
+
+                    if (array_intersect($catslugs, $v)) return true;
+
+                    break;
+                case 'template':
+                    $template = get_post_meta($post_id, '_wp_page_template', true);
+
+                    if (in_array($template, $v)) return true;
+
+                    break;
+            endswitch;
+        endforeach;
+
+        return false;
+    }
+
+
+    /**
+     * @return bool|RW_Meta_Box
      */
     public function register()
     {
+        if(!$this->canRegister()) return false;
+
         $box = $this->toArray();
 
         return new RW_Meta_Box($box);
