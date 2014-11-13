@@ -207,7 +207,7 @@ abstract class Type
                 'menu_name'          => __($this->plural),
                 'parent_item_colon'  => __('Parent Item:'),
                 'all_items'          => __($this->plural),
-                'view_item'          => __('View') . ' ' . __($this->plural),
+                'view_item'          => __('View') . ' ' . __($this->singular),
                 'add_new_item'       => __('Add') . ' ' . __($this->singular),
                 'add_new'            => __('Add') . ' ' . __($this->singular),
                 'edit_item'          => __('Edit') . ' ' . __($this->singular),
