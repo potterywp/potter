@@ -21,7 +21,7 @@ class Paginator
      */
     protected     $args;
     protected     $wp_query, $currentPage, $pages, $range, $showItens;
-    protected     $element     = null;
+    protected     $element     = '';
     public static $argsDefault = array(
         'before'      => '<ul class="pagination %1$s">',
         'after'       => '</ul>',
