@@ -1,8 +1,9 @@
-<?php namespace Potter\Post;
+<?php namespace Potter\Taxonomy;
 
 use Illuminate\Support\Str;
+use Potter\Post\Type;
 
-class Taxonomy
+class Create
 {
 
    /**
@@ -19,6 +20,10 @@ class Taxonomy
     * @var string
     */
    protected $plural;
+   /**
+    * @var string
+    */
+   protected $route;
 
    /**
     * @var bool
@@ -120,14 +125,17 @@ class Taxonomy
     */
    public function setArgs($customizations = array())
    {
-      $defaults = wp_parse_args(
-         $customizations,
-         [
-            'label'        => $this->plural,
-            'labels'       => $this->getLabels(),
-            'hierarchical' => $this->hierarchical,
-         ]
-      );
+      $defaults = [
+         'label'        => $this->plural,
+         'labels'       => $this->getLabels(),
+         'hierarchical' => $this->hierarchical,
+      ];
+
+      if (!empty($this->route)):
+         $defaults['rewrite'] = ['slug' => $this->route, 'with_front' => true];
+      endif;
+
+      $defaults = wp_parse_args($customizations, $defaults);
 
       $this->args = wp_parse_args($this->args, $defaults);
 

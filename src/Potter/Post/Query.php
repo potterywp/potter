@@ -173,6 +173,20 @@ class Query
     }
 
     /**
+     * @param array $args
+     *
+     * @return \WP_Post
+     */
+    public function first($args = array())
+    {
+        $query = $this->perPage(1)->exe($args);
+
+        return $query->post;
+    }
+
+    /**
+     * @param array $args
+     *
      * @return WP_Query
      */
     public function exe($args = array())
